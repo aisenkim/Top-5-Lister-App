@@ -5,6 +5,8 @@ import {Fab, Typography} from '@mui/material'
 import AddIcon from '@mui/icons-material/Add';
 import List from '@mui/material/List';
 import AuthContext from "../auth";
+import MenuToolbar from "./Toolbar";
+
 /*
     This React component lists all the top5 lists in the UI.
     
@@ -13,10 +15,6 @@ import AuthContext from "../auth";
 const HomeScreen = () => {
     const {store} = useContext(GlobalStoreContext);
     const {auth} = useContext(AuthContext)
-
-    // console.log(store.idNamePairs)
-    // console.log("Owner Email of the List: ", store.ownerEmail)
-    // console.log("current Logged in user: ", auth.user.email)
 
     useEffect(() => {
         store.loadIdNamePairs();
@@ -43,18 +41,20 @@ const HomeScreen = () => {
             </List>;
     }
     return (
-        <div id="top5-list-selector">
-            <div id="list-selector-heading">
-                <Fab
-                    color="primary"
-                    aria-label="add"
-                    id="add-list-button"
-                    onClick={handleCreateNewList}
-                >
-                    <AddIcon/>
-                </Fab>
-                <Typography variant="h2">Your Lists</Typography>
-            </div>
+        <div id="top5-header-section">
+            {/*TODO - create toolbar component to display toolbar*/}
+            <MenuToolbar/>
+            {/*<div id="list-selector-heading">*/}
+            {/*    <Fab*/}
+            {/*        color="primary"*/}
+            {/*        aria-label="add"*/}
+            {/*        id="add-list-button"*/}
+            {/*        onClick={handleCreateNewList}*/}
+            {/*    >*/}
+            {/*        <AddIcon/>*/}
+            {/*    </Fab>*/}
+            {/*    <Typography variant="h2">Your Lists</Typography>*/}
+            {/*</div>*/}
             <div id="list-selector-list">
                 {
                     listCard

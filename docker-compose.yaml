@@ -9,4 +9,7 @@ services:
 #      - MONGO_INITDB_ROOT_PASSWORD=password
     container_name: mongodb
     volumes:
-      - /data/db
+      - mongo-data:/data/db
+volumes:
+  mongo-data:
+    driver: local
