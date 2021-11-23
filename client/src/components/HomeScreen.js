@@ -6,6 +6,7 @@ import AddIcon from '@mui/icons-material/Add';
 import List from '@mui/material/List';
 import AuthContext from "../auth";
 import MenuToolbar from "./Toolbar";
+import {styled} from "@mui/system";
 
 /*
     This React component lists all the top5 lists in the UI.
@@ -27,7 +28,7 @@ const HomeScreen = () => {
     let listCard = "";
     if (store) {
         listCard =
-            <List sx={{width: '90%', left: '5%', bgcolor: 'background.paper'}}>
+            <List sx={{width: '90%', left: '5%', bgcolor: '#e6e6e6'}} >
                 {
                     // only show list that the user owns
                     store.idNamePairs.filter((pair) => pair.ownerEmail === auth.user.email).map((pair) => (

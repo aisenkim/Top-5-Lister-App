@@ -27,13 +27,14 @@ const MenuToolbar = () => {
             <IconButton color="inherit">
                 <FunctionsRoundedIcon style={{fontSize: FONTSIZE}}/>
             </IconButton>
-            <TextField id="filled-basic" label="Search" variant="filled" style={{width : '35%'}} />
+            <TextField id="filled-basic" label="Search" variant="filled" style={{width : '100%'}} />
             <div id="sort-section">
                 <Typography
                     variant="h4"
                     noWrap
                     component="div"
                     fontWeight='bold'
+                    marginBottom='7px'
                     sx={{display: {xs: 'none', sm: 'block'}}}
                 >
                     Sort By

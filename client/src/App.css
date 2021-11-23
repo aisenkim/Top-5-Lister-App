@@ -156,11 +156,11 @@ body {
 
 /*Right side of the toolbar with sort icon and text*/
 #sort-section {
-  position:absolute;
   display: flex;
-  left: 83%;
-  align-items: center;
-  justify-content: right;
+  width: 100%;
+  left: 80%;
+  align-items: end;
+  justify-content: end;
 }
 
 #add-list-button {
