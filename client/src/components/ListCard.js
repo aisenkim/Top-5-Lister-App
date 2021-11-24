@@ -4,24 +4,27 @@ import TextField from '@mui/material/TextField';
 import Box from '@mui/material/Box';
 import ListItem from '@mui/material/ListItem';
 import IconButton from '@mui/material/IconButton';
-import EditIcon from '@mui/icons-material/Edit';
-import DeleteIcon from '@mui/icons-material/Delete';
+import DeleteForeverRoundedIcon from '@mui/icons-material/DeleteForeverRounded';
 import {Alert, CardContent, Collapse} from "@mui/material";
 import Button from "@mui/material/Button";
-import CssBaseline from "@mui/material/CssBaseline";
-// import {styled} from "@mui/system";
+import ArrowDownwardSharpIcon from '@mui/icons-material/ArrowDownwardSharp';
 import ModalUnstyled from "@mui/core/ModalUnstyled";
 import Typography from "@mui/material/Typography";
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import { styled } from '@mui/material/styles';
-
+import {styled} from '@mui/material/styles';
+import Grid from "@mui/material/Grid";
+import Top5ItemList from "./Top5ItemList";
+import CommentSection from "./CommentSection";
+import ThumbUpIcon from '@mui/icons-material/ThumbUp';
+import ThumbDownIcon from '@mui/icons-material/ThumbDown';
 /*
     This is a card in our list of top 5 lists. It lets select
     a list for editing and it has controls for changing its 
     name or deleting it.
     
-    @author McKilla Gorilla
 */
+const GridItem = styled(Grid) `
+  padding-top: 8px !important;
+`;
 
 const StyledModal = styled(ModalUnstyled)`
   position: fixed;
@@ -60,9 +63,9 @@ const style = {
 };
 
 const ExpandMore = styled((props) => {
-    const { expand, ...other } = props;
+    const {expand, ...other} = props;
     return <IconButton {...other} />;
-})(({ theme, expand }) => ({
+})(({theme, expand}) => ({
     transform: !expand ? 'rotate(0deg)' : 'rotate(180deg)',
     marginLeft: 'auto',
     transition: theme.transitions.create('transform', {
@@ -145,63 +148,74 @@ function ListCard(props) {
             }
             }
             style={{
-                fontSize: '48pt',
+                fontSize: '18pt',
                 width: '100%',
                 backgroundColor: '#fff3e0',
                 borderRadius: '20px'
             }}
         >
-            <Box sx={{p: 1, flexGrow: 1}}>{idNamePair.name}</Box>
-            <Box sx={{p: 1}}>
-                <IconButton onClick={handleToggleEdit} aria-label='edit'>
-                    <EditIcon style={{fontSize: '48pt'}}/>
-                </IconButton>
-            </Box>
-            <Box sx={{p: 1}}>
-                <IconButton onClick={(event) => {
-                    setOpen(true)
-                    handleDeleteList(event, idNamePair._id)
-                }} aria-label='delete'>
-                    <DeleteIcon style={{fontSize: '48pt'}}/>
-                </IconButton>
-            </Box>
-            <ExpandMore
-                expand={expanded}
-                onClick={handleExpandClick}
-                aria-expanded={expanded}
-                aria-label="show more"
-            >
-                <ExpandMoreIcon />
-            </ExpandMore>
-            <Collapse in={expanded} timeout="auto" unmountOnExit>
-                <CardContent>
-                    <Typography paragraph>Method:</Typography>
-                    <Typography paragraph>
-                        Heat 1/2 cup of the broth in a pot until simmering, add saffron and set
-                        aside for 10 minutes.
-                    </Typography>
-                    <Typography paragraph>
-                        Heat oil in a (14- to 16-inch) paella pan or a large, deep skillet over
-                        medium-high heat. Add chicken, shrimp and chorizo, and cook, stirring
-                        occasionally until lightly browned, 6 to 8 minutes. Transfer shrimp to a
-                        large plate and set aside, leaving chicken and chorizo in the pan. Add
-                        pimentón, bay leaves, garlic, tomatoes, onion, salt and pepper, and cook,
-                        stirring often until thickened and fragrant, about 10 minutes. Add
-                        saffron broth and remaining 4 1/2 cups chicken broth; bring to a boil.
-                    </Typography>
-                    <Typography paragraph>
-                        Add rice and stir very gently to distribute. Top with artichokes and
-                        peppers, and cook without stirring, until most of the liquid is absorbed,
-                        15 to 18 minutes. Reduce heat to medium-low, add reserved shrimp and
-                        mussels, tucking them down into the rice, and cook again without
-                        stirring, until mussels have opened and rice is just tender, 5 to 7
-                        minutes more. (Discard any mussels that don’t open.)
-                    </Typography>
-                    <Typography>
-                        Set aside off of the heat to let rest for 10 minutes, and then serve.
-                    </Typography>
-                </CardContent>
-            </Collapse>
+            <Grid container spacing={2}>
+                <GridItem item xs={9}>
+                    <Box sx={{p: 1, flexGrow: 1, fontWeight: 'bold'}}>{idNamePair.name}</Box>
+                    <Box sx={{p: 1, flexGrow: 1, fontSize: '10pt', fontWeight: 'bold', paddingTop: '0px'}}>By: Retrieved User Name</Box>
+                </GridItem>
+                <GridItem item xs={1}>
+                    <IconButton onClick={handleToggleEdit} aria-label='like'>
+                        <ThumbUpIcon style={{fontSize: '24pt'}}/>
+                    </IconButton>
+                    <Typography variant='p' style={{fontSize: '24pt'}}>8M</Typography>
+                </GridItem>
+                <GridItem item xs={1}>
+                    <IconButton onClick={(event) => {
+                        setOpen(true)
+                        handleDeleteList(event, idNamePair._id)
+                    }} aria-label='dislike'>
+                        <ThumbDownIcon style={{fontSize: '24pt'}}/>
+                    </IconButton>
+                    <Typography variant='p' style={{fontSize: '24pt'}}>8M</Typography>
+                </GridItem>
+                <GridItem item xs={1} >
+                    <IconButton onClick={(event) => {
+                        setOpen(true)
+                        handleDeleteList(event, idNamePair._id)
+                    }} aria-label='delete'>
+                        <DeleteForeverRoundedIcon style={{fontSize: '32pt'}}/>
+                    </IconButton>
+                </GridItem>
+                <GridItem item xs={12} style={{paddingTop: '0px'}}>
+                    <Collapse in={expanded} timeout="auto" unmountOnExit>
+                        <GridItem container spacing={2}>
+                            <GridItem item xs={6} sx={{height: '320px'}}>
+                                <Top5ItemList/>
+                            </GridItem>
+                            <Grid item xs={6} sx={{height: '320px'}}>
+                                <CommentSection/>
+                            </Grid>
+                        </GridItem>
+                    </Collapse>
+                </GridItem>
+                <GridItem item xs={9}>
+                    <Typography variant='p'
+                                style={{fontSize: '12pt', fontWeight: 'bold', paddingLeft: '10px'}}>Edit
+                        or Published</Typography>
+                </GridItem>
+                <GridItem item xs={2}>
+                    <Typography variant='p'
+                                style={{fontSize: '12pt', fontWeight: 'bold', paddingLeft: '5px'}}>Views:<span
+                        style={{color: 'red'}}>432,342</span></Typography>
+                </GridItem>
+                <GridItem item xs={1}>
+                    <ExpandMore
+                        expand={expanded}
+                        onClick={handleExpandClick}
+                        aria-expanded={expanded}
+                        aria-label="show more"
+                        style={{paddingLeft: '20px'}}
+                    >
+                        <ArrowDownwardSharpIcon/>
+                    </ExpandMore>
+                </GridItem>
+            </Grid>
         </ListItem>
 
     if (editActive) {

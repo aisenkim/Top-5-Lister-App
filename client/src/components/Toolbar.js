@@ -34,8 +34,8 @@ const MenuToolbar = () => {
                     noWrap
                     component="div"
                     fontWeight='bold'
-                    marginBottom='7px'
-                    sx={{display: {xs: 'none', sm: 'block'}}}
+                    marginBottom='15px'
+                    sx={{display: {xs: 'none', sm: 'block', fontSize: '20pt'}}}
                 >
                     Sort By
                 </Typography>
