@@ -15,22 +15,23 @@ const MenuToolbar = (props) => {
     const {store} = useContext(GlobalStoreContext);
 
     const handleHomeLists = async () => {
-        props.setToolMenu("home")
+        // props.setToolMenu("home")
         await store.loadIdNamePairs("home");
     }
 
     const handleAllLists = async () => {
-        props.setToolMenu("all")
+        // props.setToolMenu("all")
         await store.loadIdNamePairs("all");
     }
 
     const handleUsersLists = async () => {
-        props.setToolMenu("users")
+        // props.setToolMenu("users")
         await store.loadIdNamePairs("users");
     }
 
     function handleUpdateText(event) {
-        props.setText(event.target.value);
+        // props.setText(event.target.value);
+        store.setSearchBarText(event.target.value)
     }
 
     return (

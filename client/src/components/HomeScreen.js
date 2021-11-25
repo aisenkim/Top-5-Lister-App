@@ -7,6 +7,8 @@ import List from '@mui/material/List';
 import AuthContext from "../auth";
 import MenuToolbar from "./Toolbar";
 import {styled} from "@mui/system";
+import {Statusbar} from "./index";
+import Top5Item from "./Top5Item";
 
 /*
     This React component lists all the top5 lists in the UI.
@@ -16,14 +18,14 @@ import {styled} from "@mui/system";
 const HomeScreen = () => {
     const {store} = useContext(GlobalStoreContext);
     const {auth} = useContext(AuthContext)
-    // SEARCH TEXT INSIDE TOOLBAR
-    const [searchText, setSearchText] = useState("");
-    // SET CURRENT TOOLBAR BUTTON (HOME, ALL, USERS, COMMUNITY)
-    const [toolMenu, setToolMenu] = useState("home");
+    // // SEARCH TEXT INSIDE TOOLBAR
+    // const [searchText, setSearchText] = useState("");
+    // // SET CURRENT TOOLBAR BUTTON (HOME, ALL, USERS, COMMUNITY)
+    // const [toolMenu, setToolMenu] = useState("home");
 
     useEffect(() => {
         if (auth.user) {
-            store.loadIdNamePairs(toolMenu); // GETTING LISTPAIRS FOR HOME MENU
+            store.loadIdNamePairs(store.toolMenu); // GETTING LISTPAIRS FOR HOME MENU
         } else {
             store.loadIdNamePairs("community"); // TODO - change this to getting community list
         }
@@ -42,12 +44,12 @@ const HomeScreen = () => {
                     // ONLY SHOW LIST THAT INCLUDES SEARCH TEXT
                     store.idNamePairs
                         .filter((pair) => {
-                            if (toolMenu === "home")
-                                return pair.ownerEmail === auth.user.email && pair.name.toLowerCase().includes(searchText.toLowerCase());
-                            else if (toolMenu === "all")
-                                return pair.name.toLowerCase().includes(searchText.toLowerCase());
+                            if (store.toolMenu === "home")
+                                return pair.ownerEmail === auth.user.email && pair.name.toLowerCase().includes(store.searchText.toLowerCase());
+                            else if (store.toolMenu === "all")
+                                return pair.name.toLowerCase().includes(store.searchText.toLowerCase());
                             else
-                                return pair.ownerName.toLowerCase().includes(searchText.toLowerCase());
+                                return pair.ownerName.toLowerCase().includes(store.searchText.toLowerCase());
                         })
                         .map((pair) => (
                             <ListCard
@@ -59,27 +61,36 @@ const HomeScreen = () => {
                 }
             </List>;
     }
+
+    // let editCard = "";
+    // if (store.currentList) {
+    //     editCard =
+    //         <List id="edit-items" sx={{width: '100%', bgcolor: 'background.paper'}}>
+    //             {
+    //                 store.currentList.items.map((item, index) => (
+    //                     <Top5Item
+    //                         key={'top5-item-' + (index + 1)}
+    //                         text={item}
+    //                         index={index}
+    //                     />
+    //                 ))
+    //             }
+    //         </List>;
+    // }
+
     return (
-        <div id="top5-header-section">
-            {/*TODO - create toolbar component to display toolbar*/}
-            <MenuToolbar setText={setSearchText} setToolMenu={setToolMenu}/>
-            {/*<div id="list-selector-heading">*/}
-            {/*    <Fab*/}
-            {/*        color="primary"*/}
-            {/*        aria-label="add"*/}
-            {/*        id="add-list-button"*/}
-            {/*        onClick={handleCreateNewList}*/}
-            {/*    >*/}
-            {/*        <AddIcon/>*/}
-            {/*    </Fab>*/}
-            {/*    <Typography variant="h2">Your Lists</Typography>*/}
-            {/*</div>*/}
-            <div id="list-selector-list">
-                {
-                    listCard
-                }
+        <>
+            <div id="top5-header-section">
+                {/*<MenuToolbar setText={setSearchText} setToolMenu={setToolMenu}/>*/}
+                <div id="list-selector-list">
+                    {
+                        listCard
+                    }
+                </div>
             </div>
-        </div>)
+            {/*<Statusbar/>*/}
+        </>
+    )
 }
 
 export default HomeScreen;

@@ -209,7 +209,7 @@ function ListCard(props) {
                                 <Top5ItemList id={idNamePair._id} currentList={currentList}/>
                             </GridItem>
                             <Grid item xs={6} sx={{height: '320px'}}>
-                                <CommentSection listId={idNamePair._id} currentComments={currentComments}/>
+                                <CommentSection listId={idNamePair._id} currentComments={currentComments} setCurrentComments={setCurrentComments}/>
                             </Grid>
                         </GridItem>
                     </Collapse>

@@ -45,8 +45,9 @@ function CommentSection(props) {
     async function handleKeyPress(event) {
         if (event.code === "Enter") {
             await store.createComment(props.listId, text)
+            const responseComments = await store.getListCommentsById(props.listId)
+            props.setCurrentComments(responseComments);
             setText("")
-            console.log(store.currentListComments)
         }
     }
 
