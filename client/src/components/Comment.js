@@ -28,7 +28,6 @@ function Comment(props) {
     const {store} = useContext(GlobalStoreContext);
     const {idNamePair} = props;
 
-
     let cardElement =
         <ListItem
             // id={idNamePair._id}
@@ -45,15 +44,15 @@ function Comment(props) {
             }}
         >
             {/*<Box sx={{p: 1, flexGrow: 1}}>Random</Box>*/}
-                    {/*<Box sx={{p: 1, flexGrow: 1}}>{idNamePair.name}</Box>*/}
-                    <Box sx={{p: 1}}>
-                        <Typography variant='h6' style={{fontSize: '14px'}}>
-                            hello
-                        </Typography>
-                        <Typography variant='p' style={{fontSize: '18px'}}>
-                            hello
-                        </Typography>
-                    </Box>
+            {/*<Box sx={{p: 1, flexGrow: 1}}>{idNamePair.name}</Box>*/}
+            <Box sx={{p: 1}}>
+                <Typography variant='h6' style={{fontSize: '14px'}}>
+                    {props.comment.ownerName}
+                </Typography>
+                <Typography variant='p' style={{fontSize: '18px'}}>
+                    {props.comment.comment}
+                </Typography>
+            </Box>
         </ListItem>
     return (
         <>

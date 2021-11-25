@@ -45,7 +45,8 @@ updateTop5List = async (req, res) => {
     });
   }
 
-  Top5List.findOne({ _id: req.params.id, ownerEmail: userEmail }, (err, top5List) => {
+  // Top5List.findOne({ _id: req.params.id, ownerEmail: userEmail }, (err, top5List) => {
+  Top5List.findOne({ _id: req.params.id}, (err, top5List) => {
     console.log("top5List found: " + JSON.stringify(top5List));
     if (err) {
       console.log("Error finding it from updateTop5List")
@@ -55,12 +56,12 @@ updateTop5List = async (req, res) => {
       });
     }
 
-    console.log("$%$%$%$%$%$%$%: ", top5List)
-    if(top5List === null){
-      return res.status(401).json({
-        message : "Unauthorized. This list doesn't belong to you!"
-      })
-    }
+    // console.log("$%$%$%$%$%$%$%: ", top5List)
+    // if(top5List === null){
+    //   return res.status(401).json({
+    //     message : "Unauthorized. This list doesn't belong to you!"
+    //   })
+    // }
 
     top5List.name = body.name;
     top5List.items = body.items;

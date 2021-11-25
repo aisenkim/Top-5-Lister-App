@@ -2,6 +2,7 @@ const auth = require("../auth");
 const express = require("express");
 const Top5ListController = require("../controllers/top5list-controller");
 const UserController = require("../controllers/user-controller");
+const CommentController = require("../controllers/comment-controller");
 const router = express.Router();
 
 router.post("/top5list", auth.verify, Top5ListController.createTop5List);
@@ -15,4 +16,8 @@ router.post("/register", UserController.registerUser);
 router.post("/login", UserController.loginUser);
 router.get("/loggedIn", UserController.getLoggedIn);
 router.get("/logout", UserController.logoutUser);
+
+router.post("/comments", CommentController.createComment);
+router.get("/comments", CommentController.getComments);
+
 module.exports = router;

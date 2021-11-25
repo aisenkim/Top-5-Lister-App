@@ -22,9 +22,9 @@ const HomeScreen = () => {
     const [toolMenu, setToolMenu] = useState("home");
 
     useEffect(() => {
-        if(auth.user){
+        if (auth.user) {
             store.loadIdNamePairs(toolMenu); // GETTING LISTPAIRS FOR HOME MENU
-        } else{
+        } else {
             store.loadIdNamePairs("community"); // TODO - change this to getting community list
         }
     }, []);
@@ -42,9 +42,9 @@ const HomeScreen = () => {
                     // ONLY SHOW LIST THAT INCLUDES SEARCH TEXT
                     store.idNamePairs
                         .filter((pair) => {
-                            if(toolMenu === "home")
+                            if (toolMenu === "home")
                                 return pair.ownerEmail === auth.user.email && pair.name.toLowerCase().includes(searchText.toLowerCase());
-                            else if(toolMenu === "all")
+                            else if (toolMenu === "all")
                                 return pair.name.toLowerCase().includes(searchText.toLowerCase());
                             else
                                 return pair.ownerName.toLowerCase().includes(searchText.toLowerCase());

@@ -1,4 +1,4 @@
-import {useContext, useState} from 'react'
+import {useContext, useEffect, useState} from 'react'
 import {GlobalStoreContext} from '../store'
 import TextField from '@mui/material/TextField';
 import Box from '@mui/material/Box';
@@ -85,10 +85,26 @@ function ListCard(props) {
 
     // FOR EXPANDING EACH CARD
     const [expanded, setExpanded] = useState(false);
-    const handleExpandClick = (event, id) => {
+    const [currentList, setCurrentList] = useState([]);
+    const [currentComments, setCurrentComments] = useState([]);
+
+    const handleExpandClick = async (event, id) => {
         // SET IT AS CURRENT LIST
-        store.setCurrentList(id).then(() => setExpanded(!expanded));
+        // await store.setCurrentListComments(id)
+        const responseComments = await store.getListCommentsById(id)
+        setCurrentComments(responseComments);
+        // store.setCurrentList(id).then(() => setExpanded(!expanded));
+        // await store.setCurrentList(id)
+        const responseList = await store.findListById(id);
+        setCurrentList(responseList)
+        setExpanded(!expanded)
     };
+
+    useEffect(() => {
+        console.log("Insdie useEffect: ", expanded);
+        setExpanded(false)
+    }, []);
+
 
     const handleOpen = () => setOpen(true);
 
@@ -190,10 +206,10 @@ function ListCard(props) {
                     <Collapse in={expanded} timeout="auto" unmountOnExit>
                         <GridItem container spacing={2}>
                             <GridItem item xs={6} sx={{height: '320px'}}>
-                                <Top5ItemList id={idNamePair._id}/>
+                                <Top5ItemList id={idNamePair._id} currentList={currentList}/>
                             </GridItem>
                             <Grid item xs={6} sx={{height: '320px'}}>
-                                <CommentSection/>
+                                <CommentSection listId={idNamePair._id} currentComments={currentComments}/>
                             </Grid>
                         </GridItem>
                     </Collapse>

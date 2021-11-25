@@ -1,5 +1,5 @@
-import { createContext, useContext, useState } from 'react'
-import { useHistory } from 'react-router-dom'
+import {createContext, useContext, useState} from 'react'
+import {useHistory} from 'react-router-dom'
 import jsTPS from '../common/jsTPS'
 import api from '../api'
 import MoveItem_Transaction from '../transactions/MoveItem_Transaction'
@@ -26,7 +26,8 @@ export const GlobalStoreActionType = {
     UNMARK_LIST_FOR_DELETION: "UNMARK_LIST_FOR_DELETION",
     SET_CURRENT_LIST: "SET_CURRENT_LIST",
     SET_ITEM_EDIT_ACTIVE: "SET_ITEM_EDIT_ACTIVE",
-    SET_LIST_NAME_EDIT_ACTIVE: "SET_LIST_NAME_EDIT_ACTIVE"
+    SET_LIST_NAME_EDIT_ACTIVE: "SET_LIST_NAME_EDIT_ACTIVE",
+    SET_CURRENT_LIST_COMMENTS: "SET_CURRENT_LIST_COMMENTS"
 }
 
 // WE'LL NEED THIS TO PROCESS TRANSACTIONS
@@ -43,16 +44,17 @@ function GlobalStoreContextProvider(props) {
         listNameActive: false,
         itemActive: false,
         listMarkedForDeletion: null,
+        currentListComments: []
     });
     const history = useHistory();
 
     // SINCE WE'VE WRAPPED THE STORE IN THE AUTH CONTEXT WE CAN ACCESS THE USER HERE
-    const {  auth } = useContext(AuthContext);
+    const {auth} = useContext(AuthContext);
 
     // HERE'S THE DATA STORE'S REDUCER, IT MUST
     // HANDLE EVERY TYPE OF STATE CHANGE
     const storeReducer = (action) => {
-        const { type, payload } = action;
+        const {type, payload} = action;
         switch (type) {
             // LIST UPDATE OF ITS NAME
             case GlobalStoreActionType.CHANGE_LIST_NAME: {
@@ -62,7 +64,8 @@ function GlobalStoreContextProvider(props) {
                     newListCounter: store.newListCounter,
                     isListNameEditActive: false,
                     isItemEditActive: false,
-                    listMarkedForDeletion: null
+                    listMarkedForDeletion: null,
+                    currentListComments: store.currentListComments
                 });
             }
             // STOP EDITING THE CURRENT LIST
@@ -73,7 +76,8 @@ function GlobalStoreContextProvider(props) {
                     newListCounter: store.newListCounter,
                     isListNameEditActive: false,
                     isItemEditActive: false,
-                    listMarkedForDeletion: null
+                    listMarkedForDeletion: null,
+                    currentListComments: store.currentListComments
                 })
             }
             // CREATE A NEW LIST
@@ -84,7 +88,8 @@ function GlobalStoreContextProvider(props) {
                     newListCounter: store.newListCounter + 1,
                     isListNameEditActive: false,
                     isItemEditActive: false,
-                    listMarkedForDeletion: null
+                    listMarkedForDeletion: null,
+                    currentListComments: store.currentListComments
                 })
             }
             // GET ALL THE LISTS SO WE CAN PRESENT THEM
@@ -96,6 +101,7 @@ function GlobalStoreContextProvider(props) {
                     isListNameEditActive: false,
                     isItemEditActive: false,
                     listMarkedForDeletion: null,
+                    currentListComments: store.currentListComments
                 });
             }
             // PREPARE TO DELETE A LIST
@@ -106,7 +112,8 @@ function GlobalStoreContextProvider(props) {
                     newListCounter: store.newListCounter,
                     isListNameEditActive: false,
                     isItemEditActive: false,
-                    listMarkedForDeletion: payload
+                    listMarkedForDeletion: payload,
+                    currentListComments: store.currentListComments
                 });
             }
             // PREPARE TO DELETE A LIST
@@ -117,7 +124,8 @@ function GlobalStoreContextProvider(props) {
                     newListCounter: store.newListCounter,
                     isListNameEditActive: false,
                     isItemEditActive: false,
-                    listMarkedForDeletion: null
+                    listMarkedForDeletion: null,
+                    currentListComments: store.currentListComments
                 });
             }
             // UPDATE A LIST
@@ -128,7 +136,8 @@ function GlobalStoreContextProvider(props) {
                     newListCounter: store.newListCounter,
                     isListNameEditActive: false,
                     isItemEditActive: false,
-                    listMarkedForDeletion: null
+                    listMarkedForDeletion: null,
+                    currentListComments: store.currentListComments
                 });
             }
             // START EDITING A LIST ITEM
@@ -139,7 +148,8 @@ function GlobalStoreContextProvider(props) {
                     newListCounter: store.newListCounter,
                     isListNameEditActive: false,
                     isItemEditActive: true,
-                    listMarkedForDeletion: null
+                    listMarkedForDeletion: null,
+                    currentListComments: store.currentListComments
                 });
             }
             // START EDITING A LIST NAME
@@ -150,7 +160,20 @@ function GlobalStoreContextProvider(props) {
                     newListCounter: store.newListCounter,
                     isListNameEditActive: true,
                     isItemEditActive: false,
-                    listMarkedForDeletion: null
+                    listMarkedForDeletion: null,
+                    currentListComments: store.currentListComments
+                });
+            }
+            // SET CURRENT LIST'S COMMENTS FOR RENDERING
+            case GlobalStoreActionType.SET_CURRENT_LIST_COMMENTS: {
+                return setStore({
+                    idNamePairs: store.idNamePairs,
+                    currentList: store.currentList,
+                    newListCounter: store.newListCounter,
+                    isListNameEditActive: false,
+                    isItemEditActive: false,
+                    listMarkedForDeletion: null,
+                    currentListComments: payload
                 });
             }
             default:
@@ -168,6 +191,7 @@ function GlobalStoreContextProvider(props) {
         if (response.data.success) {
             let top5List = response.data.top5List;
             top5List.name = newName;
+
             async function updateList(top5List) {
                 response = await api.updateTop5ListById(top5List._id, top5List);
                 if (response.data.success) {
@@ -184,9 +208,11 @@ function GlobalStoreContextProvider(props) {
                             });
                         }
                     }
+
                     getListPairs(top5List);
                 }
             }
+
             updateList(top5List);
         }
     }
@@ -197,7 +223,7 @@ function GlobalStoreContextProvider(props) {
             type: GlobalStoreActionType.CLOSE_CURRENT_LIST,
             payload: {}
         });
-        
+
         tps.clearAllTransactions();
         history.push("/");
     }
@@ -216,15 +242,14 @@ function GlobalStoreContextProvider(props) {
             tps.clearAllTransactions();
             let newList = response.data.top5List;
             storeReducer({
-                type: GlobalStoreActionType.CREATE_NEW_LIST,
-                payload: newList
-            }
+                    type: GlobalStoreActionType.CREATE_NEW_LIST,
+                    payload: newList
+                }
             );
 
             // IF IT'S A VALID LIST THEN LET'S START EDITING IT
             history.push("/top5list/" + newList._id);
-        }
-        else {
+        } else {
             console.log("API FAILED TO CREATE A NEW LIST");
         }
     }
@@ -322,8 +347,7 @@ function GlobalStoreContextProvider(props) {
                 store.currentList.items[i] = store.currentList.items[i + 1];
             }
             store.currentList.items[end] = temp;
-        }
-        else if (start > end) {
+        } else if (start > end) {
             let temp = store.currentList.items[start];
             for (let i = start; i > end; i--) {
                 store.currentList.items[i] = store.currentList.items[i - 1];
@@ -358,15 +382,15 @@ function GlobalStoreContextProvider(props) {
         tps.doTransaction();
     }
 
-    store.canUndo = function() {
+    store.canUndo = function () {
         return tps.hasTransactionToUndo();
     }
 
-    store.canRedo = function() {
+    store.canRedo = function () {
         return tps.hasTransactionToRedo();
     }
 
-    store.clearAllTransactions = function() {
+    store.clearAllTransactions = function () {
         return tps.clearAllTransactions();
     }
 
@@ -386,6 +410,47 @@ function GlobalStoreContextProvider(props) {
         });
     }
 
+    store.setCurrentListComments = async function (listId) {
+        const currentListComments = await api.getComments(listId);
+        storeReducer({
+                type: GlobalStoreActionType.SET_CURRENT_LIST_COMMENTS,
+                payload: currentListComments
+            }
+        );
+    }
+
+    store.getListCommentsById = async function (listId) {
+        const currentListComments = await api.getComments(listId);
+        return currentListComments.data.comments;
+    }
+
+    /**
+     * POST request to create comment
+     */
+    store.createComment = async function (listId, commentText) {
+        let payload = {
+            ownerName: auth.user.firstName + " " + auth.user.lastName,
+            comment: commentText,
+            listId: listId
+        };
+
+        const response = await api.createComment(payload);
+        if (response.data.success) {
+            // Get All Comments for list and Update
+            const currentListComments = await api.getComments(listId);
+            storeReducer({
+                    type: GlobalStoreActionType.SET_CURRENT_LIST_COMMENTS,
+                    payload: currentListComments
+                }
+            );
+        }
+    }
+
+    store.findListById = async function(id) {
+       const result = await api.getTop5ListById(id);
+       return result.data.top5List;
+    }
+
     return (
         <GlobalStoreContext.Provider value={{
             store
@@ -396,4 +461,4 @@ function GlobalStoreContextProvider(props) {
 }
 
 export default GlobalStoreContext;
-export { GlobalStoreContextProvider };
+export {GlobalStoreContextProvider};

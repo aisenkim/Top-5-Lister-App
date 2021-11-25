@@ -3,6 +3,8 @@ import {List, TextField} from "@mui/material";
 
 import {styled} from '@mui/system';
 import Box from "@mui/material/Box";
+import {useContext, useState} from "react";
+import {GlobalStoreContext} from "../store";
 
 const StyledInputElement = styled('input')`
   width: 80%;
@@ -36,21 +38,38 @@ const CommentBox = styled(Box)`
   border-radius: 10px;
 `;
 
-function CommentSection() {
+function CommentSection(props) {
+    const {store} = useContext(GlobalStoreContext);
+    const [text, setText] = useState("");
+
+    async function handleKeyPress(event) {
+        if (event.code === "Enter") {
+            await store.createComment(props.listId, text)
+            setText("")
+            console.log(store.currentListComments)
+        }
+    }
+
+    function handleUpdateText(event) {
+        setText(event.target.value);
+    }
 
     return (
         <>
             <div id='comment-selector-list'>
                 <List sx={{width: '100%', height: '100%'}}>
-                    <Comment id={1}/>
-                    <Comment id={2}/>
-                    <Comment id={3}/>
-                    <Comment id={4}/>
-                    <Comment id={5}/>
+                    {props.currentComments.map((comment, idx) => (
+                       <Comment key={idx} comment={comment}/>
+                     ))}
+                    {/*<Comment id={1}/>*/}
+                    {/*<Comment id={2}/>*/}
+                    {/*<Comment id={3}/>*/}
+                    {/*<Comment id={4}/>*/}
+                    {/*<Comment id={5}/>*/}
                 </List>
                 {/*<StyledInputElement aria-label="Demo input" placeholder="Type something..." />*/}
             </div>
-            <StyledTextInput label="Comment" />
+            <StyledTextInput label="Comment" onKeyPress={handleKeyPress} onChange={handleUpdateText} value={text}/>
         </>
     )
 }
