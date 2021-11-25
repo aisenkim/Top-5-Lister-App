@@ -129,10 +129,17 @@ getTop5Lists = async (req, res) => {
 };
 
 
+/**
+ * GETS TOP5LIST PAIRS FOR CURRENT LOGGED IN USER
+ * @param req
+ * @param res
+ * @return {Promise<void>}
+ */
 getTop5ListPairs = async (req, res) => {
   const userEmail = await getUserEmail(req.cookies.token);
-  console.log("userere email ^^^^^^^^^^: ", userEmail)
-  await Top5List.find({ownerEmail : userEmail}, (err, top5Lists) => {
+  const toolMenu = req.query.toolMenu;
+  const filter = toolMenu === "home" ? {ownerEmail : userEmail} : {}
+  await Top5List.find(filter, (err, top5Lists) => {
     if (err) {
       return res.status(400).json({ success: false, error: err });
     }
@@ -148,7 +155,8 @@ getTop5ListPairs = async (req, res) => {
         let pair = {
           _id: list._id,
           name: list.name,
-          ownerEmail: list.ownerEmail
+          ownerEmail: list.ownerEmail,
+          ownerName: list.ownerName
         };
         pairs.push(pair);
       }

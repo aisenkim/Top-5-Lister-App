@@ -1,4 +1,4 @@
-import React, {useContext, useEffect} from 'react'
+import React, {useContext, useEffect, useState} from 'react'
 import {GlobalStoreContext} from '../store'
 import ListCard from './ListCard.js'
 import {Fab, Typography} from '@mui/material'
@@ -16,9 +16,17 @@ import {styled} from "@mui/system";
 const HomeScreen = () => {
     const {store} = useContext(GlobalStoreContext);
     const {auth} = useContext(AuthContext)
+    // SEARCH TEXT INSIDE TOOLBAR
+    const [searchText, setSearchText] = useState("");
+    // SET CURRENT TOOLBAR BUTTON (HOME, ALL, USERS, COMMUNITY)
+    const [toolMenu, setToolMenu] = useState("home");
 
     useEffect(() => {
-        store.loadIdNamePairs();
+        if(auth.user){
+            store.loadIdNamePairs(toolMenu); // GETTING LISTPAIRS FOR HOME MENU
+        } else{
+            store.loadIdNamePairs("community"); // TODO - change this to getting community list
+        }
     }, []);
 
     function handleCreateNewList() {
@@ -28,23 +36,33 @@ const HomeScreen = () => {
     let listCard = "";
     if (store) {
         listCard =
-            <List sx={{width: '90%', left: '5%', bgcolor: '#e6e6e6'}} >
+            <List sx={{width: '90%', left: '5%', bgcolor: '#e6e6e6'}}>
                 {
-                    // only show list that the user owns
-                    store.idNamePairs.filter((pair) => pair.ownerEmail === auth.user.email).map((pair) => (
-                        <ListCard
-                            key={pair._id}
-                            idNamePair={pair}
-                            selected={false}
-                        />
-                    ))
+                    // ONLY SHOW LIST OWNED BY USER
+                    // ONLY SHOW LIST THAT INCLUDES SEARCH TEXT
+                    store.idNamePairs
+                        .filter((pair) => {
+                            if(toolMenu === "home")
+                                return pair.ownerEmail === auth.user.email && pair.name.toLowerCase().includes(searchText.toLowerCase());
+                            else if(toolMenu === "all")
+                                return pair.name.toLowerCase().includes(searchText.toLowerCase());
+                            else
+                                return pair.ownerName.toLowerCase().includes(searchText.toLowerCase());
+                        })
+                        .map((pair) => (
+                            <ListCard
+                                key={pair._id}
+                                idNamePair={pair}
+                                selected={false}
+                            />
+                        ))
                 }
             </List>;
     }
     return (
         <div id="top5-header-section">
             {/*TODO - create toolbar component to display toolbar*/}
-            <MenuToolbar/>
+            <MenuToolbar setText={setSearchText} setToolMenu={setToolMenu}/>
             {/*<div id="list-selector-heading">*/}
             {/*    <Fab*/}
             {/*        color="primary"*/}

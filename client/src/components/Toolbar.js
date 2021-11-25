@@ -5,29 +5,50 @@ import FunctionsRoundedIcon from '@mui/icons-material/FunctionsRounded';
 import SortRoundedIcon from '@mui/icons-material/SortRounded';
 import {IconButton, TextField} from "@mui/material";
 import Typography from "@mui/material/Typography";
+import {useContext, useState} from "react";
+import {GlobalStoreContext} from "../store";
 
-const MenuToolbar = () => {
-    const FONTSIZE = 50;
+// FOR FONTSIZE OF ICON
+const FONTSIZE = 50;
 
-   const handleHome = (event) => {
-       console.log("Home Button Pressed");
-   }
+const MenuToolbar = (props) => {
+    const {store} = useContext(GlobalStoreContext);
+
+    const handleHomeLists = async () => {
+        props.setToolMenu("home")
+        await store.loadIdNamePairs("home");
+    }
+
+    const handleAllLists = async () => {
+        props.setToolMenu("all")
+        await store.loadIdNamePairs("all");
+    }
+
+    const handleUsersLists = async () => {
+        props.setToolMenu("users")
+        await store.loadIdNamePairs("users");
+    }
+
+    function handleUpdateText(event) {
+        props.setText(event.target.value);
+    }
 
     return (
         <div id="toolbar-container">
-            <IconButton onClick={handleHome} color="inherit">
+            <IconButton onClick={handleHomeLists} color="inherit">
                 <HomeRoundedIcon style={{fontSize: FONTSIZE}}/>
             </IconButton>
-            <IconButton color="inherit">
-                <GroupsOutlinedIcon style={{fontSize: FONTSIZE}} />
+            <IconButton onClick={handleAllLists} color="inherit">
+                <GroupsOutlinedIcon style={{fontSize: FONTSIZE}}/>
             </IconButton>
-            <IconButton color="inherit">
+            <IconButton onClick={handleUsersLists} color="inherit">
                 <PersonOutlinedIcon style={{fontSize: FONTSIZE}}/>
             </IconButton>
             <IconButton color="inherit">
                 <FunctionsRoundedIcon style={{fontSize: FONTSIZE}}/>
             </IconButton>
-            <TextField id="filled-basic" label="Search" variant="filled" style={{width : '100%'}} />
+            <TextField id="filled-basic" label="Search" variant="filled" style={{width: '100%'}}
+                       onChange={handleUpdateText}/>
             <div id="sort-section">
                 <Typography
                     variant="h4"
@@ -40,7 +61,7 @@ const MenuToolbar = () => {
                     Sort By
                 </Typography>
                 <IconButton color='inherit'>
-                   <SortRoundedIcon style={{fontSize: FONTSIZE}}/>
+                    <SortRoundedIcon style={{fontSize: FONTSIZE}}/>
                 </IconButton>
             </div>
         </div>

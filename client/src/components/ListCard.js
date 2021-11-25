@@ -16,13 +16,14 @@ import Top5ItemList from "./Top5ItemList";
 import CommentSection from "./CommentSection";
 import ThumbUpIcon from '@mui/icons-material/ThumbUp';
 import ThumbDownIcon from '@mui/icons-material/ThumbDown';
+import AuthContext from "../auth";
 /*
     This is a card in our list of top 5 lists. It lets select
     a list for editing and it has controls for changing its 
     name or deleting it.
     
 */
-const GridItem = styled(Grid) `
+const GridItem = styled(Grid)`
   padding-top: 8px !important;
 `;
 
@@ -76,6 +77,7 @@ const ExpandMore = styled((props) => {
 
 function ListCard(props) {
     const {store} = useContext(GlobalStoreContext);
+    const {auth} = useContext(AuthContext)
     const [editActive, setEditActive] = useState(false);
     const [text, setText] = useState("");
     const {idNamePair} = props;
@@ -83,8 +85,9 @@ function ListCard(props) {
 
     // FOR EXPANDING EACH CARD
     const [expanded, setExpanded] = useState(false);
-    const handleExpandClick = () => {
-        setExpanded(!expanded);
+    const handleExpandClick = (event, id) => {
+        // SET IT AS CURRENT LIST
+        store.setCurrentList(id).then(() => setExpanded(!expanded));
     };
 
     const handleOpen = () => setOpen(true);
@@ -99,7 +102,6 @@ function ListCard(props) {
         if (!event.target.disabled) {
             // CHANGE THE CURRENT LIST
             // store.setCurrentList(id);
-            console.log('here')
         }
     }
 
@@ -157,7 +159,9 @@ function ListCard(props) {
             <Grid container spacing={2}>
                 <GridItem item xs={9}>
                     <Box sx={{p: 1, flexGrow: 1, fontWeight: 'bold'}}>{idNamePair.name}</Box>
-                    <Box sx={{p: 1, flexGrow: 1, fontSize: '10pt', fontWeight: 'bold', paddingTop: '0px'}}>By: Retrieved User Name</Box>
+                    <Box sx={{p: 1, flexGrow: 1, fontSize: '10pt', fontWeight: 'bold', paddingTop: '0px'}}>
+                        By: {idNamePair.ownerName}
+                    </Box>
                 </GridItem>
                 <GridItem item xs={1}>
                     <IconButton onClick={handleToggleEdit} aria-label='like'>
@@ -174,7 +178,7 @@ function ListCard(props) {
                     </IconButton>
                     <Typography variant='p' style={{fontSize: '24pt'}}>8M</Typography>
                 </GridItem>
-                <GridItem item xs={1} >
+                <GridItem item xs={1}>
                     <IconButton onClick={(event) => {
                         setOpen(true)
                         handleDeleteList(event, idNamePair._id)
@@ -186,7 +190,7 @@ function ListCard(props) {
                     <Collapse in={expanded} timeout="auto" unmountOnExit>
                         <GridItem container spacing={2}>
                             <GridItem item xs={6} sx={{height: '320px'}}>
-                                <Top5ItemList/>
+                                <Top5ItemList id={idNamePair._id}/>
                             </GridItem>
                             <Grid item xs={6} sx={{height: '320px'}}>
                                 <CommentSection/>
@@ -207,7 +211,10 @@ function ListCard(props) {
                 <GridItem item xs={1}>
                     <ExpandMore
                         expand={expanded}
-                        onClick={handleExpandClick}
+                        // onClick={handleExpandClick}
+                        onClick={(event) => {
+                            handleExpandClick(event, idNamePair._id)
+                        }}
                         aria-expanded={expanded}
                         aria-label="show more"
                         style={{paddingLeft: '20px'}}

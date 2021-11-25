@@ -47,7 +47,7 @@ function GlobalStoreContextProvider(props) {
     const history = useHistory();
 
     // SINCE WE'VE WRAPPED THE STORE IN THE AUTH CONTEXT WE CAN ACCESS THE USER HERE
-    const { auth } = useContext(AuthContext);
+    const {  auth } = useContext(AuthContext);
 
     // HERE'S THE DATA STORE'S REDUCER, IT MUST
     // HANDLE EVERY TYPE OF STATE CHANGE
@@ -208,7 +208,8 @@ function GlobalStoreContextProvider(props) {
         let payload = {
             name: newListName,
             items: ["?", "?", "?", "?", "?"],
-            ownerEmail: auth.user.email
+            ownerEmail: auth.user.email,
+            ownerName: auth.user.firstName + " " + auth.user.lastName
         };
         const response = await api.createTop5List(payload);
         if (response.data.success) {
@@ -228,17 +229,20 @@ function GlobalStoreContextProvider(props) {
         }
     }
 
-    // THIS FUNCTION LOADS ALL THE ID, NAME PAIRS SO WE CAN LIST ALL THE LISTS
-    store.loadIdNamePairs = async function () {
-        const response = await api.getTop5ListPairs();
+    /**
+     * THIS FUNCTION LOADS ALL THE ID, NAME PAIRS SO WE CAN LIST ALL THE LISTS
+     * GETS TOP5LIST OF CURRENTLY LOGGED IN USER (FOR HOME MENU)
+     * @param toolMenu - home, all, users (query param for getTop5ListPairs)
+     */
+    store.loadIdNamePairs = async function (toolMenu) {
+        const response = await api.getTop5ListPairs(toolMenu);
         if (response.data.success) {
             let pairsArray = response.data.idNamePairs;
             storeReducer({
                 type: GlobalStoreActionType.LOAD_ID_NAME_PAIRS,
                 payload: pairsArray
             });
-        }
-        else {
+        } else {
             console.log("API FAILED TO GET THE LIST PAIRS");
         }
     }
@@ -293,7 +297,7 @@ function GlobalStoreContextProvider(props) {
                     type: GlobalStoreActionType.SET_CURRENT_LIST,
                     payload: top5List
                 });
-                history.push("/top5list/" + top5List._id);
+                // history.push("/top5list/" + top5List._id);
             }
         }
     }
