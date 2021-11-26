@@ -89,14 +89,15 @@ function ListCard(props) {
     const [currentComments, setCurrentComments] = useState([]);
 
     const handleExpandClick = async (event, id) => {
-        // SET IT AS CURRENT LIST
-        // await store.setCurrentListComments(id)
-        const responseComments = await store.getListCommentsById(id)
-        setCurrentComments(responseComments);
-        // store.setCurrentList(id).then(() => setExpanded(!expanded));
-        // await store.setCurrentList(id)
+        // const responseComments = await store.getListCommentsById(id)
+        // setCurrentComments(responseComments);
         const responseList = await store.findListById(id);
         setCurrentList(responseList)
+
+        // UPDATE VIEW COUNT PER LIST
+        if(!expanded && idNamePair.published) {
+            await store.updateCurrentListViews(id, responseList)
+        }
         setExpanded(!expanded)
     };
 
@@ -179,7 +180,8 @@ function ListCard(props) {
                 fontSize: '18pt',
                 width: '100%',
                 backgroundColor: isPublished ? '#9fa8da' : '#fff3e0',
-                borderRadius: '20px'
+                borderRadius: '20px',
+                border: '1px solid black'
             }}
         >
             <Grid container spacing={2}>
@@ -240,7 +242,7 @@ function ListCard(props) {
                 <GridItem item xs={2}>
                     <Typography variant='p'
                                 style={{fontSize: '12pt', fontWeight: 'bold', paddingLeft: '5px'}}>Views:<span
-                        style={{color: 'red'}}>432,342</span></Typography>
+                        style={{color: 'red'}}>{idNamePair.views}</span></Typography>
                 </GridItem>
                 <GridItem item xs={1}>
                     <ExpandMore

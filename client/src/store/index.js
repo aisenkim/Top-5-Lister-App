@@ -440,9 +440,8 @@ function GlobalStoreContextProvider(props) {
         }
     }
 
-    store.updateTop5ListPublishStatus = async function() {
+    store.updateTop5ListPublishStatus = async function () {
         store.currentList.published = true;
-        console.log("fdsfdsfsdfd: ", store.currentList)
         const response = await api.updateTop5ListById(store.currentList._id, store.currentList)
         if (response.data.success) {
             storeReducer({
@@ -451,6 +450,20 @@ function GlobalStoreContextProvider(props) {
             });
         }
         history.push("/");
+    }
+
+    store.updateCurrentListViews = async function (id, list) {
+        list.views += 1
+        const response = await api.updateTop5ListById(id, list)
+        // if (response.data.success) {
+        await store.loadIdNamePairs(store.toolMenu)
+        // if (response.data.success) {
+        //     storeReducer({
+        //         type: GlobalStoreActionType.SET_CURRENT_LIST,
+        //         payload: list
+        //     });
+        // }
+
     }
 
     // THIS FUNCTION ENABLES THE PROCESS OF EDITING A LIST NAME
