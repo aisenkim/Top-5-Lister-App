@@ -83,6 +83,10 @@ function ListCard(props) {
     const {idNamePair} = props;
     const [open, setOpen] = useState(false);
 
+    // FOR LIKE AND DISLIKE
+    const [isLike, setIsLike] = useState(false);
+    const [isDislike, setIsDislike] = useState(false);
+
     // FOR EXPANDING EACH CARD
     const [expanded, setExpanded] = useState(false);
     const [currentList, setCurrentList] = useState([]);
@@ -160,6 +164,48 @@ function ListCard(props) {
         store.setCurrentList(idNamePair._id)
     }
 
+
+    async function handleLikeButton() {
+        // DO NOTHING WHEN LIST NOT PUBLISHED
+        // TODO - CHECK IF USER IS LOGGED IN OR NOT
+        if(!idNamePair.published)
+            return
+        let isLikeCounter = 0
+        let isDislikeCounter = 0
+        if(isDislike) {
+            setIsDislike(false)
+            isDislikeCounter = -1
+        }
+        if(isLike) {
+            setIsLike(false)
+            isLikeCounter = -1
+        } else {
+            setIsLike(true)
+            isLikeCounter = 1
+        }
+        await store.updateLikeDislikeToServer(idNamePair._id, isLikeCounter, isDislikeCounter);
+    }
+
+    async function handleDislikeButton() {
+        // DO NOTHING WHEN LIST NOT PUBLISHED
+        if(!idNamePair.published)
+            return
+        let isLikeCounter = 0
+        let isDislikeCounter = 0
+        if(isLike) {
+            setIsLike(false)
+            isLikeCounter = -1
+        }
+        if(isDislike) {
+            setIsDislike(false)
+            isDislikeCounter = -1
+        } else {
+            setIsDislike(true)
+            isDislikeCounter = 1
+        }
+        await store.updateLikeDislikeToServer(idNamePair._id, isLikeCounter, isDislikeCounter);
+    }
+
     const isPublished = idNamePair.published;
     const date = new Date(idNamePair.updatedAt);
     let formmatedDate = date.toDateString();
@@ -192,19 +238,16 @@ function ListCard(props) {
                     </Box>
                 </GridItem>
                 <GridItem item xs={1}>
-                    <IconButton onClick={handleToggleEdit} aria-label='like'>
-                        <ThumbUpIcon style={{fontSize: '24pt'}}/>
+                    <IconButton onClick={handleLikeButton} aria-label='like'>
+                        <ThumbUpIcon style={{fontSize: '24pt', color: isLike ? "blue" : "gray"}}/>
                     </IconButton>
-                    <Typography variant='p' style={{fontSize: '24pt'}}>8M</Typography>
+                    <Typography variant='p' style={{fontSize: '24pt'}}>{idNamePair.like}</Typography>
                 </GridItem>
                 <GridItem item xs={1}>
-                    <IconButton onClick={(event) => {
-                        setOpen(true)
-                        handleDeleteList(event, idNamePair._id)
-                    }} aria-label='dislike'>
-                        <ThumbDownIcon style={{fontSize: '24pt'}}/>
+                    <IconButton onClick={handleDislikeButton} aria-label='dislike'>
+                        <ThumbDownIcon style={{fontSize: '24pt', color: isDislike ? 'blue' : "gray"}}/>
                     </IconButton>
-                    <Typography variant='p' style={{fontSize: '24pt'}}>8M</Typography>
+                    <Typography variant='p' style={{fontSize: '24pt'}}>{idNamePair.dislike}</Typography>
                 </GridItem>
                 <GridItem item xs={1}>
                     <IconButton onClick={(event) => {

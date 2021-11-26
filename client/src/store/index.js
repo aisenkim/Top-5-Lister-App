@@ -530,6 +530,45 @@ function GlobalStoreContextProvider(props) {
         })
     }
 
+    store.updateLike = function (shouldIncreaseLike) {
+        if (shouldIncreaseLike)
+            store.currentList.like += 1
+        else
+            store.currentList.like -= 1
+
+        storeReducer({
+            type: GlobalStoreActionType.SET_CURRENT_LIST,
+            payload: store.currentList
+        });
+    }
+
+    store.updateDislike = function (shouldIncreaseDislike) {
+        if (shouldIncreaseDislike)
+            store.currentList.dislike += 1
+        else
+            store.currentList.dislike-= 1
+
+        storeReducer({
+            type: GlobalStoreActionType.SET_CURRENT_LIST,
+            payload: store.currentList
+        });
+    }
+
+    store.updateLikeDislikeToServer = async function(listId, isLikeCounter, isDislikeCounter) {
+        let response = await api.getTop5ListById(listId);
+        if (response.data.success) {
+            let top5List = response.data.top5List;
+
+            top5List.like += isLikeCounter
+            top5List.dislike += isDislikeCounter
+
+            response = await api.updateTop5ListById(top5List._id, top5List);
+            if (response.data.success) {
+                await store.loadIdNamePairs(store.toolMenu)
+            }
+        }
+    }
+
     return (
         <GlobalStoreContext.Provider value={{
             store
