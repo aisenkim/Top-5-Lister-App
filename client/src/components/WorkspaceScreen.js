@@ -4,9 +4,6 @@ import List from '@mui/material/List';
 import {ListItem, Stack, TextField, Typography} from '@mui/material'
 import {GlobalStoreContext} from '../store/index.js'
 import {styled} from "@mui/system";
-import Top5ItemList from "./Top5ItemList";
-import Grid from "@mui/material/Grid";
-import CommentSection from "./CommentSection";
 import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
 /*

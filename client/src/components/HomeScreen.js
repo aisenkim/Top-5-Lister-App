@@ -38,7 +38,7 @@ const HomeScreen = () => {
     let listCard = "";
     if (store) {
         listCard =
-            <List sx={{width: '90%', left: '5%', bgcolor: '#e6e6e6'}}>
+            <List sx={{width: '90%', left: '5%', bgcolor: '#bdbdbd'}}>
                 {
                     // ONLY SHOW LIST OWNED BY USER
                     // ONLY SHOW LIST THAT INCLUDES SEARCH TEXT

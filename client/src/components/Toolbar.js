@@ -48,7 +48,7 @@ const MenuToolbar = (props) => {
             <IconButton color="inherit">
                 <FunctionsRoundedIcon style={{fontSize: FONTSIZE}}/>
             </IconButton>
-            <TextField id="filled-basic" label="Search" variant="filled" style={{width: '100%'}}
+            <TextField id="filled-basic" label="Search" variant="filled" style={{width: '100%', background: 'rgb(243, 246, 249)', borderRadius: '10px', textDecoration: 'none'}}
                        onChange={handleUpdateText}/>
             <div id="sort-section">
                 <Typography

@@ -159,6 +159,12 @@ function ListCard(props) {
         store.setCurrentList(idNamePair._id)
     }
 
+    const isPublished = idNamePair.published;
+    const date = new Date(idNamePair.updatedAt);
+    let formmatedDate = date.toDateString();
+    formmatedDate = formmatedDate.substr(formmatedDate.indexOf(" ") + 1)
+
+
     let cardElement =
         <ListItem
             id={idNamePair._id}
@@ -172,7 +178,7 @@ function ListCard(props) {
             style={{
                 fontSize: '18pt',
                 width: '100%',
-                backgroundColor: '#fff3e0',
+                backgroundColor: isPublished ? '#9fa8da' : '#fff3e0',
                 borderRadius: '20px'
             }}
         >
@@ -180,7 +186,7 @@ function ListCard(props) {
                 <GridItem item xs={9}>
                     <Box sx={{p: 1, flexGrow: 1, fontWeight: 'bold'}}>{idNamePair.name}</Box>
                     <Box sx={{p: 1, flexGrow: 1, fontSize: '10pt', fontWeight: 'bold', paddingTop: '0px'}}>
-                        By: {idNamePair.ownerName}
+                        By: <Typography variant='p' style={{textDecoration: 'underline', fontSize: '10pt', color: "blue"}}>{idNamePair.ownerName}</Typography>
                     </Box>
                 </GridItem>
                 <GridItem item xs={1}>
@@ -221,12 +227,12 @@ function ListCard(props) {
                 <GridItem item xs={9}>
                     {idNamePair.published ?
                         <Typography variant='p'
-                                    style={{fontSize: '12pt', fontWeight: 'bold', paddingLeft: '10px'}}>
-                            {idNamePair.updatedAt}
+                                    style={{fontSize: '10pt', fontWeight: 'bold', paddingLeft: '10px'}}>
+                            Published:  <span style={{color: 'green'}}>{formmatedDate}</span>
                         </Typography>
                         :
-                        <Typography variant='p' onClick={handleEditList}
-                                    style={{fontSize: '12pt', fontWeight: 'bold', paddingLeft: '10px'}}>
+                        <Typography variant='a' onClick={handleEditList}
+                                    style={{fontSize: '10pt', fontWeight: 'bold', paddingLeft: '10px' , textDecoration: 'underline', color: "red"}}>
                             Edit
                         </Typography>
                     }
