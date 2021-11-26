@@ -99,7 +99,7 @@ function ListCard(props) {
         setCurrentList(responseList)
 
         // UPDATE VIEW COUNT PER LIST
-        if(!expanded && idNamePair.published) {
+        if (!expanded && idNamePair.published) {
             await store.updateCurrentListViews(id, responseList)
         }
         setExpanded(!expanded)
@@ -108,6 +108,11 @@ function ListCard(props) {
     useEffect(() => {
         console.log("Insdie useEffect: ", expanded);
         setExpanded(false)
+        // GO THROUGH IDNAMPAIR TO SEE IF USER LIKED OR DISLIKED BEFORE
+        if (auth.user && idNamePair.like.includes(auth.user.email))
+            setIsLike(true)
+        else if (auth.user && idNamePair.dislike.includes(auth.user.email))
+            setIsDislike(true)
     }, []);
 
 
@@ -168,15 +173,15 @@ function ListCard(props) {
     async function handleLikeButton() {
         // DO NOTHING WHEN LIST NOT PUBLISHED
         // TODO - CHECK IF USER IS LOGGED IN OR NOT
-        if(!idNamePair.published)
+        if (!idNamePair.published || !auth.user)
             return
         let isLikeCounter = 0
         let isDislikeCounter = 0
-        if(isDislike) {
+        if (isDislike) {
             setIsDislike(false)
             isDislikeCounter = -1
         }
-        if(isLike) {
+        if (isLike) {
             setIsLike(false)
             isLikeCounter = -1
         } else {
@@ -188,15 +193,15 @@ function ListCard(props) {
 
     async function handleDislikeButton() {
         // DO NOTHING WHEN LIST NOT PUBLISHED
-        if(!idNamePair.published)
+        if (!idNamePair.published)
             return
         let isLikeCounter = 0
         let isDislikeCounter = 0
-        if(isLike) {
+        if (isLike) {
             setIsLike(false)
             isLikeCounter = -1
         }
-        if(isDislike) {
+        if (isDislike) {
             setIsDislike(false)
             isDislikeCounter = -1
         } else {
@@ -234,20 +239,24 @@ function ListCard(props) {
                 <GridItem item xs={9}>
                     <Box sx={{p: 1, flexGrow: 1, fontWeight: 'bold'}}>{idNamePair.name}</Box>
                     <Box sx={{p: 1, flexGrow: 1, fontSize: '10pt', fontWeight: 'bold', paddingTop: '0px'}}>
-                        By: <Typography variant='p' style={{textDecoration: 'underline', fontSize: '10pt', color: "blue"}}>{idNamePair.ownerName}</Typography>
+                        By: <Typography variant='p' style={{
+                        textDecoration: 'underline',
+                        fontSize: '10pt',
+                        color: "blue"
+                    }}>{idNamePair.ownerName}</Typography>
                     </Box>
                 </GridItem>
                 <GridItem item xs={1}>
                     <IconButton onClick={handleLikeButton} aria-label='like'>
                         <ThumbUpIcon style={{fontSize: '24pt', color: isLike ? "blue" : "gray"}}/>
                     </IconButton>
-                    <Typography variant='p' style={{fontSize: '24pt'}}>{idNamePair.like}</Typography>
+                    <Typography variant='p' style={{fontSize: '24pt'}}>{idNamePair.like.length}</Typography>
                 </GridItem>
                 <GridItem item xs={1}>
                     <IconButton onClick={handleDislikeButton} aria-label='dislike'>
                         <ThumbDownIcon style={{fontSize: '24pt', color: isDislike ? 'blue' : "gray"}}/>
                     </IconButton>
-                    <Typography variant='p' style={{fontSize: '24pt'}}>{idNamePair.dislike}</Typography>
+                    <Typography variant='p' style={{fontSize: '24pt'}}>{idNamePair.dislike.length}</Typography>
                 </GridItem>
                 <GridItem item xs={1}>
                     <IconButton onClick={(event) => {
@@ -264,7 +273,8 @@ function ListCard(props) {
                                 <Top5ItemList id={idNamePair._id} currentList={currentList}/>
                             </GridItem>
                             <Grid item xs={6} sx={{height: '320px'}}>
-                                <CommentSection listId={idNamePair._id} currentComments={currentComments} setCurrentComments={setCurrentComments}/>
+                                <CommentSection listId={idNamePair._id} currentComments={currentComments}
+                                                setCurrentComments={setCurrentComments}/>
                             </Grid>
                         </GridItem>
                     </Collapse>
@@ -273,11 +283,17 @@ function ListCard(props) {
                     {idNamePair.published ?
                         <Typography variant='p'
                                     style={{fontSize: '10pt', fontWeight: 'bold', paddingLeft: '10px'}}>
-                            Published:  <span style={{color: 'green'}}>{formmatedDate}</span>
+                            Published: <span style={{color: 'green'}}>{formmatedDate}</span>
                         </Typography>
                         :
                         <Typography variant='a' onClick={handleEditList}
-                                    style={{fontSize: '10pt', fontWeight: 'bold', paddingLeft: '10px' , textDecoration: 'underline', color: "red"}}>
+                                    style={{
+                                        fontSize: '10pt',
+                                        fontWeight: 'bold',
+                                        paddingLeft: '10px',
+                                        textDecoration: 'underline',
+                                        color: "red"
+                                    }}>
                             Edit
                         </Typography>
                     }

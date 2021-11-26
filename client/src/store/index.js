@@ -288,8 +288,8 @@ function GlobalStoreContextProvider(props) {
             ownerEmail: auth.user.email,
             ownerName: auth.user.firstName + " " + auth.user.lastName,
             views: 0,
-            like: 0,
-            dislike: 0,
+            like: [],
+            dislike: [],
             published: false // TODO - GET PARAMETER AND SET TRUE OR FALSE
         };
         const response = await api.createTop5List(payload);
@@ -559,8 +559,17 @@ function GlobalStoreContextProvider(props) {
         if (response.data.success) {
             let top5List = response.data.top5List;
 
-            top5List.like += isLikeCounter
-            top5List.dislike += isDislikeCounter
+            if(isLikeCounter === 1) {
+                top5List.like.push(top5List.ownerEmail)
+            }else if(isLikeCounter === -1) {
+                top5List.like = top5List.like.filter((email) => email !== auth.user.email);
+            }
+
+            if(isDislikeCounter === 1) {
+                top5List.dislike.push(top5List.ownerEmail)
+            } else if(isDislikeCounter === -1) {
+                top5List.dislike = top5List.dislike.filter((email) => email !== auth.user.email);
+            }
 
             response = await api.updateTop5ListById(top5List._id, top5List);
             if (response.data.success) {
