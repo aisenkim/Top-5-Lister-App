@@ -3,8 +3,6 @@ import {GlobalStoreContext} from '../store'
 import TextField from '@mui/material/TextField';
 import Box from '@mui/material/Box';
 import ListItem from '@mui/material/ListItem';
-import IconButton from '@mui/material/IconButton';
-import EditIcon from '@mui/icons-material/Edit';
 
 /*
     This React component represents a single item in our
@@ -25,9 +23,15 @@ function Top5Item(props) {
 
     function handleKeyPress(event) {
         if (event.code === "Enter") {
-            store.addUpdateItemTransaction(props.index, text);
+            // store.addUpdateItemTransaction(props.index, text);
+            store.updateItem(props.index, text);
             toggleEdit();
         }
+    }
+
+    function updateItemDb(event) {
+        store.updateItem(props.index, text);
+        // toggleEdit();
     }
 
     function handleUpdateText(event) {
@@ -44,36 +48,53 @@ function Top5Item(props) {
             key={props.key}
             className={itemClass}
             sx={{display: 'flex', p: 1}}
+            onDoubleClick={toggleEdit}
             style={{
-                fontSize: '48pt',
-                width: '100%'
+                fontSize: '26pt',
+                width: '76%',
+                height: '16.5%',
+                margin: '10px',
+                left: '2%',
+                top: '4%',
+                backgroundColor: '#fff3e0',
+                borderRadius: '10px'
             }}
         >
-            <Box sx={{p: 1}}>
-                <IconButton aria-label='edit' onClick={toggleEdit}>
-                    <EditIcon style={{fontSize: '48pt'}}/>
-                </IconButton>
-            </Box>
+            {/*<Box sx={{p: 1}}>*/}
+            {/*    /!*<IconButton aria-label='edit' onClick={toggleEdit}>*!/*/}
+            {/*    /!*    <EditIcon style={{fontSize: '48pt'}}/>*!/*/}
+            {/*    /!*</IconButton>*!/*/}
+            {/*    <Typography variant='h4' style={{fontSize: '42pt'}}>{props.index + 1}</Typography>*/}
+            {/*</Box>*/}
             <Box sx={{p: 1, flexGrow: 1}}>{props.text}</Box>
         </ListItem>
 
     if (editActive) {
         listItem =
             <TextField
-                margin="normal"
                 required
-                fullWidth
                 id={'item-' + (index + 1)}
-                label="Top 5 List Name"
+                // label="Top 5 List Name"
                 name="name"
                 autoComplete="Top 5 List Name"
-                className='list-card'
+                // className='list-card'
                 onKeyPress={handleKeyPress}
                 onChange={handleUpdateText}
+                onBlur={updateItemDb}
                 defaultValue={props.text}
-                inputProps={{style: {fontSize: 48}}}
-                InputLabelProps={{style: {fontSize: 24}}}
+                inputProps={{style: {fontSize: 26}}}
+                InputLabelProps={{style: {fontSize: 26}}}
                 autoFocus
+                style={{
+                    fontSize: '26pt',
+                    width: '76%',
+                    height: '16.5%',
+                    margin: '10px',
+                    left: '2%',
+                    top: '4%',
+                    backgroundColor: '#fff3e0',
+                    borderRadius: '10px'
+                }}
             />
     }
 

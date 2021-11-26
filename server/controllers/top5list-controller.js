@@ -65,6 +65,10 @@ updateTop5List = async (req, res) => {
 
     top5List.name = body.name;
     top5List.items = body.items;
+    top5List.published = body.published;
+    top5List.views = body.views;
+    top5List.like= body.like;
+    top5List.dislik= body.dislike;
     top5List
       .save()
       .then(() => {
@@ -157,12 +161,13 @@ getTop5ListPairs = async (req, res) => {
           _id: list._id,
           name: list.name,
           ownerEmail: list.ownerEmail,
-          ownerName: list.ownerName
+          ownerName: list.ownerName,
+          published: list.published,
+          updatedAt: list.updatedAt
         };
         pairs.push(pair);
       }
       // Found top5Lists could have no items in it
-      console.log("THe pairs **********",pairs)
       return res.status(200).json({ success: true, idNamePairs: pairs, ownerEmail: userEmail});
     }
   }).catch((err) => console.log("getTopListPairs in catch block: ", err));

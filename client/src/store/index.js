@@ -276,7 +276,6 @@ function GlobalStoreContextProvider(props) {
             payload: {}
         });
 
-        tps.clearAllTransactions();
         history.push("/");
     }
 
@@ -378,7 +377,7 @@ function GlobalStoreContextProvider(props) {
                     type: GlobalStoreActionType.SET_CURRENT_LIST,
                     payload: top5List
                 });
-                // history.push("/top5list/" + top5List._id);
+                history.push("/top5list/" + top5List._id);
             }
         }
     }
@@ -430,24 +429,28 @@ function GlobalStoreContextProvider(props) {
         }
     }
 
-    store.undo = function () {
-        tps.undoTransaction();
+    store.updateTop5ListTitle = async function (title) {
+        store.currentList.name = title;
+        const response = await api.updateTop5ListById(store.currentList._id, store.currentList)
+        if (response.data.success) {
+            storeReducer({
+                type: GlobalStoreActionType.SET_CURRENT_LIST,
+                payload: store.currentList
+            });
+        }
     }
 
-    store.redo = function () {
-        tps.doTransaction();
-    }
-
-    store.canUndo = function () {
-        return tps.hasTransactionToUndo();
-    }
-
-    store.canRedo = function () {
-        return tps.hasTransactionToRedo();
-    }
-
-    store.clearAllTransactions = function () {
-        return tps.clearAllTransactions();
+    store.updateTop5ListPublishStatus = async function() {
+        store.currentList.published = true;
+        console.log("fdsfdsfsdfd: ", store.currentList)
+        const response = await api.updateTop5ListById(store.currentList._id, store.currentList)
+        if (response.data.success) {
+            storeReducer({
+                type: GlobalStoreActionType.SET_CURRENT_LIST,
+                payload: store.currentList
+            });
+        }
+        history.push("/");
     }
 
     // THIS FUNCTION ENABLES THE PROCESS OF EDITING A LIST NAME

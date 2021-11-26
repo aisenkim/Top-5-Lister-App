@@ -155,6 +155,10 @@ function ListCard(props) {
         setText(event.target.value);
     }
 
+    function handleEditList() {
+        store.setCurrentList(idNamePair._id)
+    }
+
     let cardElement =
         <ListItem
             id={idNamePair._id}
@@ -215,9 +219,17 @@ function ListCard(props) {
                     </Collapse>
                 </GridItem>
                 <GridItem item xs={9}>
-                    <Typography variant='p'
-                                style={{fontSize: '12pt', fontWeight: 'bold', paddingLeft: '10px'}}>Edit
-                        or Published</Typography>
+                    {idNamePair.published ?
+                        <Typography variant='p'
+                                    style={{fontSize: '12pt', fontWeight: 'bold', paddingLeft: '10px'}}>
+                            {idNamePair.updatedAt}
+                        </Typography>
+                        :
+                        <Typography variant='p' onClick={handleEditList}
+                                    style={{fontSize: '12pt', fontWeight: 'bold', paddingLeft: '10px'}}>
+                            Edit
+                        </Typography>
+                    }
                 </GridItem>
                 <GridItem item xs={2}>
                     <Typography variant='p'

@@ -1,12 +1,14 @@
-import {useContext} from 'react'
+import {React, useContext, useState} from 'react'
 import Top5Item from './Top5Item.js'
 import List from '@mui/material/List';
-import {ListItem, TextField, Typography} from '@mui/material'
+import {ListItem, Stack, TextField, Typography} from '@mui/material'
 import {GlobalStoreContext} from '../store/index.js'
 import {styled} from "@mui/system";
 import Top5ItemList from "./Top5ItemList";
 import Grid from "@mui/material/Grid";
 import CommentSection from "./CommentSection";
+import Button from "@mui/material/Button";
+import Box from "@mui/material/Box";
 /*
     This React component lets us edit a loaded list, which only
     happens when we are on the proper route.
@@ -20,18 +22,37 @@ const StyledTextInput = styled(TextField)`
   border-radius: 10px;
   border: 1px solid #e5e8ec;
   width: 40%;
+  margin-bottom: 1px;
+  margin-top: 4px;
+  margin-left: 4%;
 `;
-
-const GridContainer = styled(Grid)`
-  //left: 0%;
-  //top: 10%;
-  //width: 100%;
-  //height: 80%;
-  //background: #669966;
-`
 
 function WorkspaceScreen() {
     const {store} = useContext(GlobalStoreContext);
+    const [text, setText] = useState("");
+
+    function handleKeyPress(event) {
+        if (event.code === "Enter") {
+            // store.addUpdateItemTransaction(props.index, text);
+            store.updateTop5ListTitle(text);
+        }
+    }
+
+    function handleUpdateTitle() {
+        store.updateTop5ListTitle(text);
+    }
+
+    function handleUpdateText(event) {
+        setText(event.target.value);
+    }
+
+    function handleSaveButton() {
+       store.closeCurrentList();
+    }
+
+    function handlePublishButton() {
+        store.updateTop5ListPublishStatus()
+    }
 
     let editItems = "";
     if (store.currentList) {
@@ -49,17 +70,53 @@ function WorkspaceScreen() {
             </List>;
     }
     return (
+        <List sx={{width: '88%', left: '5.5%', top: '8%', bgcolor: '#283593', height: '66%', borderRadius: '10px'}}>
+            <StyledTextInput label="Title" size="small" onKeyPress={handleKeyPress}
+                             onChange={handleUpdateText} onBlur={handleUpdateTitle} defaultValue={store.currentList.name} />
+            <Box sx={{
+                width: '92%',
+                marginLeft: '4%',
+                bgcolor: 'orange',
+                height: '85%',
+                borderRadius: '10px',
+                marginTop: '10px'
+            }}>
 
-        <List sx={{width: '90%', left: '5%', bgcolor: '#e6e6e6'}}>
-            {
-                store.currentList.items.map((item, index) => (
-                    <Top5Item
-                        key={'top5-item-' + (index + 1)}
-                        text={item}
-                        index={index}
-                    />
-                ))
-            }
+                {
+                    store.currentList.items.map((item, index) => (
+                        <Stack direction="row" spacing={2} key={index}>
+                            <ListItem
+                                id={'item-' + (index + 1)}
+                                key={index}
+                                sx={{display: 'flex', p: 1}}
+                                style={{
+                                    fontSize: '18pt',
+                                    width: '10%',
+                                    height: '16.5%',
+                                    margin: '10px',
+                                    left: '2%',
+                                    top: '4%',
+                                    backgroundColor: '#fff3e0',
+                                    borderRadius: '10px'
+                                }}
+                            >
+                                <Box sx={{p: 1}}>
+                                    <Typography variant='h4' style={{fontSize: '26pt'}}>{index + 1}.</Typography>
+                                </Box>
+                            </ListItem>
+                            <Top5Item
+                                key={'top5-item-' + (index + 1)}
+                                text={item}
+                                index={index}
+                            />
+                        </Stack>
+                    ))
+                }
+            </Box>
+            <Stack direction="row" spacing={2} sx={{width: '20%', marginTop: '43px', float: 'right'}}>
+                <Button variant="contained" size="large" onClick={handleSaveButton}>Save</Button>
+                <Button variant="contained" size="large" onClick={handlePublishButton}>Publish</Button>
+            </Stack>
         </List>
         // <div id="top5-workspace">
         //     <StyledTextInput label="Comment" />
