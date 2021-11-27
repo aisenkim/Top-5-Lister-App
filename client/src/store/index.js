@@ -518,6 +518,13 @@ function GlobalStoreContextProvider(props) {
         }
     }
 
+    store.deleteListComments = async function(listId) {
+        const response = await api.deleteTop5ListComments(listId);
+        if (response.data.success) {
+            store.loadIdNamePairs();
+        }
+    }
+
     store.findListById = async function (id) {
         const result = await api.getTop5ListById(id);
         return result.data.top5List;

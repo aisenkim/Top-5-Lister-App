@@ -43,7 +43,15 @@ getComments = async (req, res) => {
     })
 }
 
+deleteListComments = async (req, res) => {
+   const listId = req.query.listId;
+    await Comment.deleteMany({listId}, () => {
+        return res.status(200).json({success: true})
+    })
+}
+
 module.exports = {
     createComment,
-    getComments
+    getComments,
+    deleteListComments
 }

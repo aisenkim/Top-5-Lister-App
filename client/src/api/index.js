@@ -37,6 +37,7 @@ export const logoutUser = () => api.get(`/logout/`)
 
 export const createComment = (payload) => api.post('/comments', payload)
 export const getComments = (listId) => api.get(`/comments?listId=${listId}`)
+export const deleteTop5ListComments = (listId) => api.delete(`/comments?listId=${listId}`)
 
 const apis = {
     createTop5List,
@@ -52,7 +53,8 @@ const apis = {
     logoutUser,
 
     createComment,
-    getComments
+    getComments,
+    deleteTop5ListComments
 }
 
 export default apis

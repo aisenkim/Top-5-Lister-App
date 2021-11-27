@@ -151,6 +151,8 @@ function ListCard(props) {
 
     async function deleteMarkedList() {
         await store.deleteMarkedList();
+        // DELETE LIST'S COMMENTS
+        await store.deleteListComments(idNamePair._id)
     }
 
     function handleKeyPress(event) {

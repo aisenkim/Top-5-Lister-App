@@ -19,5 +19,6 @@ router.get("/logout", UserController.logoutUser);
 
 router.post("/comments", CommentController.createComment);
 router.get("/comments", CommentController.getComments);
+router.delete("/comments", auth.verify, CommentController.deleteListComments);
 
 module.exports = router;
