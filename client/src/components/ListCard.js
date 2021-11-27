@@ -276,7 +276,7 @@ function ListCard(props) {
                             </GridItem>
                             <Grid item xs={6} sx={{height: '320px'}}>
                                 <CommentSection listId={idNamePair._id} currentComments={currentComments}
-                                                setCurrentComments={setCurrentComments}/>
+                                                setCurrentComments={setCurrentComments} isPublished={idNamePair.published}/>
                             </Grid>
                         </GridItem>
                     </Collapse>

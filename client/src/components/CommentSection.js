@@ -1,10 +1,11 @@
 import Comment from "./Comment";
-import {List, TextField} from "@mui/material";
+import {List, Popover, TextField} from "@mui/material";
 
 import {styled} from '@mui/system';
 import Box from "@mui/material/Box";
 import {useContext, useState} from "react";
 import {GlobalStoreContext} from "../store";
+import Typography from "@mui/material/Typography";
 
 const StyledInputElement = styled('input')`
   width: 80%;
@@ -42,7 +43,17 @@ function CommentSection(props) {
     const {store} = useContext(GlobalStoreContext);
     const [text, setText] = useState("");
 
+    const [anchorEl, setAnchorEl] = useState(null);
+    const open = Boolean(anchorEl);
+    const id = open ? 'simple-popover' : undefined;
+
     async function handleKeyPress(event) {
+        // CHECK IF LIST IS PUBLISHED
+        if(!props.isPublished){
+            setAnchorEl(event.currentTarget);
+            return;
+        }
+
         if (event.code === "Enter") {
             await store.createComment(props.listId, text)
             const responseComments = await store.getListCommentsById(props.listId)
@@ -54,6 +65,11 @@ function CommentSection(props) {
     function handleUpdateText(event) {
         setText(event.target.value);
     }
+
+    const handleClose = () => {
+        setAnchorEl(null);
+    };
+
 
     return (
         <>
@@ -71,6 +87,18 @@ function CommentSection(props) {
                 {/*<StyledInputElement aria-label="Demo input" placeholder="Type something..." />*/}
             </div>
             <StyledTextInput label="Comment" onKeyPress={handleKeyPress} onChange={handleUpdateText} value={text}/>
+            <Popover
+            id={id}
+            open={open}
+            anchorEl={anchorEl}
+            onClose={handleClose}
+            anchorOrigin={{
+                vertical: 'bottom',
+                horizontal: 'left',
+            }}
+            >
+            <Typography sx={{ p: 2 }}>Cannot write comments before publishing.</Typography>
+        </Popover>
         </>
     )
 }
