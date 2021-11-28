@@ -139,8 +139,9 @@ getTop5Lists = async (req, res) => {
 getTop5ListPairs = async (req, res) => {
     const userEmail = await getUserEmail(req.cookies.token);
     const toolMenu = req.query.toolMenu;
+    const sortMenu = req.query.sortMenu
     const filter = toolMenu === "home" ? {ownerEmail: userEmail} : {published: true}
-    await Top5List.find(filter, (err, top5Lists) => {
+    await Top5List.find(filter, null, {sort: sortMenu}, (err, top5Lists) => {
         if (err) {
             return res.status(400).json({success: false, error: err});
         }

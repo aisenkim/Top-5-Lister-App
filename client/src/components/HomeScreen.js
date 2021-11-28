@@ -25,9 +25,9 @@ const HomeScreen = () => {
 
     useEffect(() => {
         if (auth.user) {
-            store.loadIdNamePairs(store.toolMenu); // GETTING LISTPAIRS FOR HOME MENU
+            store.loadIdNamePairs(store.toolMenu, "-createdAt"); // GETTING LISTPAIRS FOR HOME MENU
         } else {
-            store.loadIdNamePairs("community"); // TODO - change this to getting community list
+            store.loadIdNamePairs("community", "-createdAt"); // TODO - change this to getting community list
         }
     }, []);
 

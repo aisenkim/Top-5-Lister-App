@@ -313,9 +313,10 @@ function GlobalStoreContextProvider(props) {
      * THIS FUNCTION LOADS ALL THE ID, NAME PAIRS SO WE CAN LIST ALL THE LISTS
      * GETS TOP5LIST OF CURRENTLY LOGGED IN USER (FOR HOME MENU)
      * @param toolMenu - home, all, users (query param for getTop5ListPairs)
+     * @param sort - 0: publish newest, 1: publish oldest, 2: views, 3: likes, 4: dislikes
      */
-    store.loadIdNamePairs = async function (toolMenu) {
-        const response = await api.getTop5ListPairs(toolMenu);
+    store.loadIdNamePairs = async function (toolMenu, sort) {
+        const response = await api.getTop5ListPairs(toolMenu, sort);
         if (response.data.success) {
             let pairsArray = response.data.idNamePairs;
             storeReducer({
@@ -346,7 +347,7 @@ function GlobalStoreContextProvider(props) {
     store.deleteList = async function (listToDelete) {
         let response = await api.deleteTop5ListById(listToDelete._id);
         if (response.data.success) {
-            store.loadIdNamePairs();
+            store.loadIdNamePairs(store.toolMenu, "-createdAt");
             history.push("/");
         }
     }
@@ -456,7 +457,7 @@ function GlobalStoreContextProvider(props) {
         list.views += 1
         const response = await api.updateTop5ListById(id, list)
         // if (response.data.success) {
-        await store.loadIdNamePairs(store.toolMenu)
+        await store.loadIdNamePairs(store.toolMenu, "-createAt")
         // if (response.data.success) {
         //     storeReducer({
         //         type: GlobalStoreActionType.SET_CURRENT_LIST,
@@ -521,7 +522,7 @@ function GlobalStoreContextProvider(props) {
     store.deleteListComments = async function(listId) {
         const response = await api.deleteTop5ListComments(listId);
         if (response.data.success) {
-            store.loadIdNamePairs();
+            store.loadIdNamePairs(store.toolMenu, "-createAt");
         }
     }
 
@@ -580,7 +581,7 @@ function GlobalStoreContextProvider(props) {
 
             response = await api.updateTop5ListById(top5List._id, top5List);
             if (response.data.success) {
-                await store.loadIdNamePairs(store.toolMenu)
+                await store.loadIdNamePairs(store.toolMenu, "-createAt")
             }
         }
     }
