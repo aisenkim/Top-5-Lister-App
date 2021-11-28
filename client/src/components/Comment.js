@@ -39,17 +39,18 @@ function Comment(props) {
             style={{
                 fontSize: '14pt',
                 width: '100%',
-                backgroundColor: 'blue',
-                borderRadius: '10px'
+                backgroundColor: '#ffab00',
+                borderRadius: '10px',
+                padding: '4px'
             }}
         >
             {/*<Box sx={{p: 1, flexGrow: 1}}>Random</Box>*/}
             {/*<Box sx={{p: 1, flexGrow: 1}}>{idNamePair.name}</Box>*/}
             <Box sx={{p: 1}}>
-                <Typography variant='h6' style={{fontSize: '14px'}}>
+                <Typography variant='h6' style={{color: '#1a237e', textDecoration: 'underline', fontSize: '12px', fontWeight: 'bold'}}>
                     {props.comment.ownerName}
                 </Typography>
-                <Typography variant='p' style={{fontSize: '18px'}}>
+                <Typography variant='p' style={{fontSize: '16px'}}>
                     {props.comment.comment}
                 </Typography>
             </Box>

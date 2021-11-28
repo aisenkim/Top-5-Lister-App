@@ -14,10 +14,10 @@ function Top5ItemList(props) {
     // }
 
     return (
-        <Box sx={{backgroundColor: 'orange', width: '100%', height: '100%', borderRadius: '10px', padding: '5px'}}>
+        <Box sx={{backgroundColor: '#1a237e', width: '100%', height: '100%', borderRadius: '10px', padding: '5px'}}>
             {
                 props.currentList.items.map((item, index) => (
-                    <Typography key={index} variant="h4" style={{padding: '10px'}}>
+                    <Typography key={index} variant="h4" style={{padding: '10px', color: '#ffab00'}}>
                         {index + 1}. {item}
                     </Typography>
                 ))

@@ -3,7 +3,7 @@ import {List, Popover, TextField} from "@mui/material";
 
 import {styled} from '@mui/system';
 import Box from "@mui/material/Box";
-import {useContext, useState} from "react";
+import {useContext, useEffect, useState} from "react";
 import {GlobalStoreContext} from "../store";
 import Typography from "@mui/material/Typography";
 
@@ -47,6 +47,15 @@ function CommentSection(props) {
     const open = Boolean(anchorEl);
     const id = open ? 'simple-popover' : undefined;
 
+    useEffect(() => {
+        loadComment();
+    }, []);
+
+    async function loadComment() {
+        const responseComments = await store.getListCommentsById(props.listId)
+        props.setCurrentComments(responseComments);
+    }
+
     async function handleKeyPress(event) {
         // CHECK IF LIST IS PUBLISHED
         if(!props.isPublished){
@@ -56,8 +65,7 @@ function CommentSection(props) {
 
         if (event.code === "Enter") {
             await store.createComment(props.listId, text)
-            const responseComments = await store.getListCommentsById(props.listId)
-            props.setCurrentComments(responseComments);
+            loadComment();
             setText("")
         }
     }
@@ -75,16 +83,10 @@ function CommentSection(props) {
         <>
             <div id='comment-selector-list'>
                 <List sx={{width: '100%', height: '100%'}}>
-                    {props.currentComments.map((comment, idx) => (
+                    {props.currentComments.slice(0).reverse().map((comment, idx) => (
                        <Comment key={idx} comment={comment}/>
                      ))}
-                    {/*<Comment id={1}/>*/}
-                    {/*<Comment id={2}/>*/}
-                    {/*<Comment id={3}/>*/}
-                    {/*<Comment id={4}/>*/}
-                    {/*<Comment id={5}/>*/}
                 </List>
-                {/*<StyledInputElement aria-label="Demo input" placeholder="Type something..." />*/}
             </div>
             <StyledTextInput label="Comment" onKeyPress={handleKeyPress} onChange={handleUpdateText} value={text}/>
             <Popover

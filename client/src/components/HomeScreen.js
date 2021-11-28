@@ -81,14 +81,12 @@ const HomeScreen = () => {
     return (
         <>
             <div id="top5-header-section">
-                {/*<MenuToolbar setText={setSearchText} setToolMenu={setToolMenu}/>*/}
                 <div id="list-selector-list">
                     {
                         listCard
                     }
                 </div>
             </div>
-            {/*<Statusbar/>*/}
         </>
     )
 }

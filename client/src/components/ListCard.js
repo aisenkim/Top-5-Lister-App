@@ -25,6 +25,7 @@ import AuthContext from "../auth";
 */
 const GridItem = styled(Grid)`
   padding-top: 8px !important;
+  padding-bottom: 0px !important;
 `;
 
 const StyledModal = styled(ModalUnstyled)`
@@ -265,7 +266,7 @@ function ListCard(props) {
                         setOpen(true)
                         handleDeleteList(event, idNamePair._id)
                     }} aria-label='delete'>
-                        <DeleteForeverRoundedIcon style={{fontSize: '32pt'}}/>
+                        <DeleteForeverRoundedIcon style={{fontSize: '30pt'}}/>
                     </IconButton>
                 </GridItem>
                 <GridItem item xs={12} style={{paddingTop: '0px'}}>
@@ -274,10 +275,10 @@ function ListCard(props) {
                             <GridItem item xs={6} sx={{height: '320px'}}>
                                 <Top5ItemList id={idNamePair._id} currentList={currentList}/>
                             </GridItem>
-                            <Grid item xs={6} sx={{height: '320px'}}>
+                            <GridItem item xs={6} sx={{height: '320px'}}>
                                 <CommentSection listId={idNamePair._id} currentComments={currentComments}
                                                 setCurrentComments={setCurrentComments} isPublished={idNamePair.published}/>
-                            </Grid>
+                            </GridItem>
                         </GridItem>
                     </Collapse>
                 </GridItem>
