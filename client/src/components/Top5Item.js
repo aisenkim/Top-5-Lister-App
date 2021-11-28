@@ -1,4 +1,4 @@
-import {React, useContext, useState} from "react";
+import {React, useContext, useEffect, useState} from "react";
 import {GlobalStoreContext} from '../store'
 import TextField from '@mui/material/TextField';
 import Box from '@mui/material/Box';
@@ -15,6 +15,15 @@ function Top5Item(props) {
     const [editActive, setEditActive] = useState(false);
     const [text, setText] = useState("");
 
+    useEffect(() => {
+        const hasEmptyString = checkCurrentListHasEmptyString(store.currentList.items)
+        if(hasEmptyString)
+            props.setPublishDisabled(true)
+        else
+            props.setPublishDisabled(false)
+    }, []);
+
+
     function toggleEdit() {
         let newActive = !editActive;
         store.setIsItemEditActive()
@@ -25,14 +34,36 @@ function Top5Item(props) {
         if (event.code === "Enter") {
             // store.addUpdateItemTransaction(props.index, text);
             store.updateItem(props.index, text);
+            const hasEmptyString = checkCurrentListHasEmptyString(store.currentList.items)
+            if(hasEmptyString)
+                props.setPublishDisabled(true)
+            else
+                props.setPublishDisabled(false)
             toggleEdit();
         }
     }
 
+    function checkCurrentListHasEmptyString(currentList) {
+        let shouldDisable = false
+        currentList.forEach((item) => {
+            if (item === '') {
+                shouldDisable = true
+            }
+        })
+        return shouldDisable;
+    }
+
     function updateItemDb(event) {
         store.updateItem(props.index, text);
-        // toggleEdit();
+        const hasEmptyString = checkCurrentListHasEmptyString(store.currentList.items)
+        if(hasEmptyString)
+            props.setPublishDisabled(true)
+        else
+            props.setPublishDisabled(false)
+        toggleEdit();
     }
+
+
 
     function handleUpdateText(event) {
         setText(event.target.value);
@@ -47,7 +78,7 @@ function Top5Item(props) {
             id={'item-' + (index + 1)}
             key={props.key}
             className={itemClass}
-            sx={{display: 'flex', p: 1}}
+            sx={{p: 1}}
             onDoubleClick={toggleEdit}
             style={{
                 fontSize: '26pt',
@@ -60,13 +91,7 @@ function Top5Item(props) {
                 borderRadius: '10px'
             }}
         >
-            {/*<Box sx={{p: 1}}>*/}
-            {/*    /!*<IconButton aria-label='edit' onClick={toggleEdit}>*!/*/}
-            {/*    /!*    <EditIcon style={{fontSize: '48pt'}}/>*!/*/}
-            {/*    /!*</IconButton>*!/*/}
-            {/*    <Typography variant='h4' style={{fontSize: '42pt'}}>{props.index + 1}</Typography>*/}
-            {/*</Box>*/}
-            <Box sx={{p: 1, flexGrow: 1}}>{props.text}</Box>
+            <Box sx={{p: 1, flexGrow: 1, height: '29pt'}}>{props.text}</Box>
         </ListItem>
 
     if (editActive) {

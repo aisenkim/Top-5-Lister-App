@@ -1,4 +1,4 @@
-import {React, useContext, useState} from 'react'
+import {React, useContext, useEffect, useState} from 'react'
 import Top5Item from './Top5Item.js'
 import List from '@mui/material/List';
 import {ListItem, Stack, TextField, Typography} from '@mui/material'
@@ -27,6 +27,14 @@ const StyledTextInput = styled(TextField)`
 function WorkspaceScreen() {
     const {store} = useContext(GlobalStoreContext);
     const [text, setText] = useState("");
+    const [publishDisabled, setPublishDisabled] = useState(true);
+    const [hasSameTitle, setHasSameTitle] = useState(true);
+
+    useEffect(() => {
+        store.checkHasTop5ListTitle(text).then((result) => {
+            setHasSameTitle(result)
+        })
+    }, []);
 
     function handleKeyPress(event) {
         if (event.code === "Enter") {
@@ -35,7 +43,10 @@ function WorkspaceScreen() {
         }
     }
 
-    function handleUpdateTitle() {
+    function handleUpdateTitle(event) {
+        store.checkHasTop5ListTitle(text).then((result) => {
+            setHasSameTitle(result)
+        })
         store.updateTop5ListTitle(text);
     }
 
@@ -61,6 +72,7 @@ function WorkspaceScreen() {
                             key={'top5-item-' + (index + 1)}
                             text={item}
                             index={index}
+
                         />
                     ))
                 }
@@ -105,6 +117,7 @@ function WorkspaceScreen() {
                                 key={'top5-item-' + (index + 1)}
                                 text={item}
                                 index={index}
+                                setPublishDisabled={setPublishDisabled}
                             />
                         </Stack>
                     ))
@@ -112,39 +125,10 @@ function WorkspaceScreen() {
             </Box>
             <Stack direction="row" spacing={2} sx={{width: '20%', marginTop: '43px', float: 'right'}}>
                 <Button variant="contained" size="large" onClick={handleSaveButton}>Save</Button>
-                <Button variant="contained" size="large" onClick={handlePublishButton}>Publish</Button>
+                <Button variant="contained" size="large" disabled={publishDisabled || hasSameTitle} onClick={handlePublishButton}>Publish</Button>
             </Stack>
         </List>
-        // <div id="top5-workspace">
-        //     <StyledTextInput label="Comment" />
-        //     <div id="workspace-edit">
-        //         {/*<StyledTextInput label="Comment" onKeyPress={handleKeyPress} onChange={handleUpdateText} value={text}/>*/}
-        //         <div id="edit-numbering">
-        //             <div className="item-number"><Typography variant="h3">1.</Typography></div>
-        //             <div className="item-number"><Typography variant="h3">2.</Typography></div>
-        //             <div className="item-number"><Typography variant="h3">3.</Typography></div>
-        //             <div className="item-number"><Typography variant="h3">4.</Typography></div>
-        //             <div className="item-number"><Typography variant="h3">5.</Typography></div>
-        //         </div>
-        //         {editItems}
-        //     </div>
-        // </div>
     )
-    // return (
-    //     <div id="top5-workspace">
-    //         <div id="workspace-edit">
-    //             {/*<StyledTextInput label="Comment" onKeyPress={handleKeyPress} onChange={handleUpdateText} value={text}/>*/}
-    //             <div id="edit-numbering">
-    //                 <div className="item-number"><Typography variant="h3">1.</Typography></div>
-    //                 <div className="item-number"><Typography variant="h3">2.</Typography></div>
-    //                 <div className="item-number"><Typography variant="h3">3.</Typography></div>
-    //                 <div className="item-number"><Typography variant="h3">4.</Typography></div>
-    //                 <div className="item-number"><Typography variant="h3">5.</Typography></div>
-    //             </div>
-    //             {editItems}
-    //         </div>
-    //     </div>
-    // )
 }
 
 export default WorkspaceScreen;
