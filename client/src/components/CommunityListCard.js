@@ -79,10 +79,7 @@ const ExpandMore = styled((props) => {
 function ListCard(props) {
     const {store} = useContext(GlobalStoreContext);
     const {auth} = useContext(AuthContext)
-    const [editActive, setEditActive] = useState(false);
-    const [text, setText] = useState("");
-    const {idNamePair} = props;
-    const [open, setOpen] = useState(false);
+    const {communityList} = props;
 
     // FOR LIKE AND DISLIKE
     const [isLike, setIsLike] = useState(false);
@@ -96,12 +93,12 @@ function ListCard(props) {
     const handleExpandClick = async (event, id) => {
         // const responseComments = await store.getListCommentsById(id)
         // setCurrentComments(responseComments);
-        const responseList = await store.findListById(id);
+        const responseList = await store.getCommunityListById(id);
         setCurrentList(responseList)
 
         // UPDATE VIEW COUNT PER LIST
-        if (!expanded && idNamePair.published) {
-            await store.updateCurrentListViews(id, responseList)
+        if (!expanded) {
+            await store.updateCurrentListViewsCommunity(id, responseList)
         }
         setExpanded(!expanded)
     };
@@ -110,20 +107,11 @@ function ListCard(props) {
         console.log("Insdie useEffect: ", expanded);
         setExpanded(false)
         // GO THROUGH IDNAMPAIR TO SEE IF USER LIKED OR DISLIKED BEFORE
-        if (auth.user && idNamePair.like.includes(auth.user.email))
+        if (auth.user && communityList.like.includes(auth.user.email))
             setIsLike(true)
-        else if (auth.user && idNamePair.dislike.includes(auth.user.email))
+        else if (auth.user && communityList.dislike.includes(auth.user.email))
             setIsDislike(true)
     }, []);
-
-
-    const handleOpen = () => setOpen(true);
-
-    const handleClose = () => {
-        setOpen(false);
-        // Need to set error messag state to null so that modal doesn't open again
-        // auth.setErrorMessageNull();
-    }
 
     function handleLoadList(event, id) {
         if (!event.target.disabled) {
@@ -132,51 +120,10 @@ function ListCard(props) {
         }
     }
 
-    function handleToggleEdit(event) {
-        event.stopPropagation();
-        toggleEdit();
-    }
-
-    function toggleEdit() {
-        let newActive = !editActive;
-        if (newActive) {
-            store.setIsListNameEditActive();
-        }
-        setEditActive(newActive);
-    }
-
-    async function handleDeleteList(event, id) {
-        event.stopPropagation();
-        store.markListForDeletion(id);
-    }
-
-    async function deleteMarkedList() {
-        await store.deleteMarkedList();
-        // DELETE LIST'S COMMENTS
-        await store.deleteListComments(idNamePair._id)
-    }
-
-    function handleKeyPress(event) {
-        if (event.code === "Enter") {
-            let id = event.target.id.substring("list-".length);
-            store.changeListName(id, text);
-            toggleEdit();
-        }
-    }
-
-    function handleUpdateText(event) {
-        setText(event.target.value);
-    }
-
-    function handleEditList() {
-        store.setCurrentList(idNamePair._id)
-    }
-
-
     async function handleLikeButton() {
         // DO NOTHING WHEN LIST NOT PUBLISHED
         // TODO - CHECK IF USER IS LOGGED IN OR NOT
-        if (!idNamePair.published || !auth.user)
+        if (!auth.user)
             return
         let isLikeCounter = 0
         let isDislikeCounter = 0
@@ -191,12 +138,11 @@ function ListCard(props) {
             setIsLike(true)
             isLikeCounter = 1
         }
-        await store.updateLikeDislikeToServer(idNamePair._id, isLikeCounter, isDislikeCounter);
+        await store.updateLikeDislikeCommunityListToServer(communityList._id, isLikeCounter, isDislikeCounter, auth.user.email);
     }
 
     async function handleDislikeButton() {
-        // DO NOTHING WHEN LIST NOT PUBLISHED
-        if (!idNamePair.published)
+        if (!auth.user)
             return
         let isLikeCounter = 0
         let isDislikeCounter = 0
@@ -211,107 +157,79 @@ function ListCard(props) {
             setIsDislike(true)
             isDislikeCounter = 1
         }
-        await store.updateLikeDislikeToServer(idNamePair._id, isLikeCounter, isDislikeCounter);
+        await store.updateLikeDislikeCommunityListToServer(communityList._id, isLikeCounter, isDislikeCounter, auth.user.email);
     }
 
-    const isPublished = idNamePair.published;
-    const date = new Date(idNamePair.createdAt);
+    const date = new Date(communityList.updatedAt);
     let formmatedDate = date.toDateString();
     formmatedDate = formmatedDate.substr(formmatedDate.indexOf(" ") + 1)
 
 
     let cardElement =
         <ListItem
-            id={idNamePair._id}
-            key={idNamePair._id}
+            id={communityList._id}
+            key={communityList._id}
             sx={{marginTop: '15px', display: 'flex', p: 1}}
             button
             onClick={(event) => {
-                handleLoadList(event, idNamePair._id)
+                handleLoadList(event, communityList._id)
             }
             }
             style={{
                 fontSize: '18pt',
                 width: '100%',
-                backgroundColor: isPublished ? '#9fa8da' : '#fff3e0',
+                backgroundColor: '#9fa8da',
                 borderRadius: '20px',
                 border: '1px solid black'
             }}
         >
             <Grid container spacing={2}>
-                <GridItem item xs={9}>
-                    <Box sx={{p: 1, flexGrow: 1, fontWeight: 'bold'}}>{idNamePair.name}</Box>
-                    <Box sx={{p: 1, flexGrow: 1, fontSize: '10pt', fontWeight: 'bold', paddingTop: '0px'}}>
-                        By: <Typography variant='p' style={{
-                        textDecoration: 'underline',
-                        fontSize: '10pt',
-                        color: "blue"
-                    }}>{idNamePair.ownerName}</Typography>
-                    </Box>
+                <GridItem item xs={10}>
+                    <Box sx={{p: 1, flexGrow: 1, fontWeight: 'bold'}}>{communityList.name}</Box>
                 </GridItem>
                 <GridItem item xs={1}>
                     <IconButton onClick={handleLikeButton} aria-label='like'>
                         <ThumbUpIcon style={{fontSize: '24pt', color: isLike ? "blue" : "gray"}}/>
                     </IconButton>
-                    <Typography variant='p' style={{fontSize: '24pt'}}>{idNamePair.like.length}</Typography>
+                    <Typography variant='p' style={{fontSize: '24pt'}}>{communityList.like.length}</Typography>
                 </GridItem>
                 <GridItem item xs={1}>
                     <IconButton onClick={handleDislikeButton} aria-label='dislike'>
                         <ThumbDownIcon style={{fontSize: '24pt', color: isDislike ? 'blue' : "gray"}}/>
                     </IconButton>
-                    <Typography variant='p' style={{fontSize: '24pt'}}>{idNamePair.dislike.length}</Typography>
-                </GridItem>
-                <GridItem item xs={1}>
-                    <IconButton onClick={(event) => {
-                        setOpen(true)
-                        handleDeleteList(event, idNamePair._id)
-                    }} aria-label='delete'>
-                        <DeleteForeverRoundedIcon style={{fontSize: '30pt'}}/>
-                    </IconButton>
+                    <Typography variant='p' style={{fontSize: '24pt'}}>{communityList.dislike.length}</Typography>
                 </GridItem>
                 <GridItem item xs={12} style={{paddingTop: '0px'}}>
                     <Collapse in={expanded} timeout="auto" unmountOnExit>
                         <GridItem container spacing={2}>
                             <GridItem item xs={6} sx={{height: '320px'}}>
-                                <Top5ItemList id={idNamePair._id} currentList={currentList}/>
+                                <Top5ItemList id={communityList._id} currentList={currentList}/>
                             </GridItem>
                             <GridItem item xs={6} sx={{height: '320px'}}>
-                                <CommentSection listId={idNamePair._id} currentComments={currentComments}
-                                                setCurrentComments={setCurrentComments} isPublished={idNamePair.published}/>
+                                <CommentSection listId={communityList._id} currentComments={currentComments}
+                                                setCurrentComments={setCurrentComments}
+                                                isPublished={true}/>
                             </GridItem>
                         </GridItem>
                     </Collapse>
                 </GridItem>
                 <GridItem item xs={9}>
-                    {idNamePair.published ?
-                        <Typography variant='p'
-                                    style={{fontSize: '10pt', fontWeight: 'bold', paddingLeft: '10px'}}>
-                            Published: <span style={{color: 'green'}}>{formmatedDate}</span>
-                        </Typography>
-                        :
-                        <Typography variant='a' onClick={handleEditList}
-                                    style={{
-                                        fontSize: '10pt',
-                                        fontWeight: 'bold',
-                                        paddingLeft: '10px',
-                                        textDecoration: 'underline',
-                                        color: "red"
-                                    }}>
-                            Edit
-                        </Typography>
-                    }
+                    <Typography variant='p'
+                                style={{fontSize: '10pt', fontWeight: 'bold', paddingLeft: '10px'}}>
+                        Updated: <span style={{color: 'green'}}>{formmatedDate}</span>
+                    </Typography>
                 </GridItem>
                 <GridItem item xs={2}>
                     <Typography variant='p'
                                 style={{fontSize: '12pt', fontWeight: 'bold', paddingLeft: '5px'}}>Views:<span
-                        style={{color: 'red'}}>{idNamePair.views}</span></Typography>
+                        style={{color: 'red'}}>{communityList.views}</span></Typography>
                 </GridItem>
                 <GridItem item xs={1}>
                     <ExpandMore
                         expand={expanded}
                         // onClick={handleExpandClick}
                         onClick={(event) => {
-                            handleExpandClick(event, idNamePair._id)
+                            handleExpandClick(event, communityList._id)
                         }}
                         aria-expanded={expanded}
                         aria-label="show more"
@@ -323,42 +241,8 @@ function ListCard(props) {
             </Grid>
         </ListItem>
 
-    if (editActive) {
-        cardElement =
-            <TextField
-                margin="normal"
-                required
-                fullWidth
-                id={"list-" + idNamePair._id}
-                label="Top 5 List Name"
-                name="name"
-                autoComplete="Top 5 List Name"
-                className='list-card'
-                onKeyPress={handleKeyPress}
-                onChange={handleUpdateText}
-                defaultValue={idNamePair.name}
-                inputProps={{style: {fontSize: 48}}}
-                InputLabelProps={{style: {fontSize: 24}}}
-                autoFocus
-            />
-    }
     return (
         <>
-            <StyledModal
-                aria-labelledby="unstyled-modal-title"
-                aria-describedby="unstyled-modal-description"
-                open={open}
-                onClose={handleClose}
-                BackdropComponent={Backdrop}
-            >
-                <Box sx={style} style={{textAlign: "center"}}>
-                    <AlertStyle severity="error">
-                        {store.listMarkedForDeletion ? `Delete list: ${store.listMarkedForDeletion.name} ?` : null}
-                    </AlertStyle>
-                    <Button variant="contained" color="success" onClick={deleteMarkedList}>Yes</Button>
-                    <Button variant="contained" color="error" onClick={handleClose}>No</Button>
-                </Box>
-            </StyledModal>
             {cardElement}
         </>
     );

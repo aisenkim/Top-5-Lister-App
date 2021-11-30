@@ -9,6 +9,7 @@ import MenuToolbar from "./Toolbar";
 import {styled} from "@mui/system";
 import {Statusbar} from "./index";
 import Top5Item from "./Top5Item";
+import CommunityListCard from "./CommunityListCard";
 
 /*
     This React component lists all the top5 lists in the UI.
@@ -27,7 +28,7 @@ const HomeScreen = () => {
         if (auth.user) {
             store.loadIdNamePairs(store.toolMenu, "-createdAt"); // GETTING LISTPAIRS FOR HOME MENU
         } else {
-            store.loadIdNamePairs("community", "-createdAt"); // TODO - change this to getting community list
+            store.getCommunityLists("community");
         }
     }, []);
 
@@ -36,7 +37,7 @@ const HomeScreen = () => {
     }
 
     let listCard = "";
-    if (store) {
+    if (store && store.toolMenu !== "community") {
         listCard =
             <List sx={{width: '90%', left: '5%', bgcolor: '#bdbdbd'}}>
                 {
@@ -55,6 +56,26 @@ const HomeScreen = () => {
                             <ListCard
                                 key={pair._id}
                                 idNamePair={pair}
+                                selected={false}
+                            />
+                        ))
+                }
+            </List>;
+    } else if (store && store.toolMenu === "community") {
+        console.log(store.communityLists);
+        listCard =
+            <List sx={{width: '90%', left: '5%', bgcolor: '#bdbdbd'}}>
+                {
+                    // ONLY SHOW LIST OWNED BY USER
+                    // ONLY SHOW LIST THAT INCLUDES SEARCH TEXT
+                    store.communityLists
+                        .filter((pair) => {
+                            return pair.name.toLowerCase().includes(store.searchText.toLowerCase());
+                        })
+                        .map((pair) => (
+                            <CommunityListCard
+                                key={pair._id}
+                                communityList={pair}
                                 selected={false}
                             />
                         ))

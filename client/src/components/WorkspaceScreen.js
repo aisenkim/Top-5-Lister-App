@@ -60,6 +60,7 @@ function WorkspaceScreen() {
 
   function handlePublishButton() {
     store.updateTop5ListPublishStatus();
+    store.createCommunityList();
   }
 
   let editItems = "";

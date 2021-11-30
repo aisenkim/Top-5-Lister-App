@@ -31,6 +31,10 @@ const MenuToolbar = (props) => {
         await store.loadIdNamePairs("users", "-createAt");
     }
 
+    const handleCommunityLists = async() => {
+       await store.getCommunityLists("community");
+    }
+
     function handleUpdateText(event) {
         // props.setText(event.target.value);
         store.setSearchBarText(event.target.value)
@@ -67,7 +71,7 @@ const MenuToolbar = (props) => {
             <IconButton onClick={handleUsersLists} color="inherit">
                 <PersonOutlinedIcon style={{fontSize: FONTSIZE}}/>
             </IconButton>
-            <IconButton color="inherit">
+            <IconButton onClick={handleCommunityLists} color="inherit">
                 <FunctionsRoundedIcon style={{fontSize: FONTSIZE}}/>
             </IconButton>
             <TextField id="filled-basic" label="Search" variant="filled" style={{

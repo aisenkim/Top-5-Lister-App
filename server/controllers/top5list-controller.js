@@ -1,6 +1,7 @@
 const Top5List = require("../models/top5list-model");
 const jwt = require("jsonwebtoken");
 const User = require("../models/user-model");
+const CommunityList = require("../models/community-list-model");
 
 createTop5List = (req, res) => {
     const body = req.body;
@@ -109,7 +110,8 @@ deleteTop5List = async (req, res) => {
 
 getTop5ListByTitle = async (req, res) => {
     const listTitle = req.query.listTitle;
-    await Top5List.findOne({name: listTitle, published: true}, (err, list) => {
+    const ownerEmail = req.query.userId;
+    await Top5List.findOne({name: listTitle, published: true, ownerEmail}, (err, list) => {
         console.log("#$#$#$#$#$#$: ", list)
         if(!list) {
             return res.status(200).json({success:true, foundList: false})
@@ -175,7 +177,7 @@ getTop5ListPairs = async (req, res) => {
                     ownerEmail: list.ownerEmail,
                     ownerName: list.ownerName,
                     published: list.published,
-                    updatedAt: list.updatedAt,
+                    createdAt: list.createdAt,
                     views: list.views,
                     like: list.like,
                     dislike: list.dislike

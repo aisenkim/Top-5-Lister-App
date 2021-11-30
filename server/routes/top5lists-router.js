@@ -3,6 +3,7 @@ const express = require("express");
 const Top5ListController = require("../controllers/top5list-controller");
 const UserController = require("../controllers/user-controller");
 const CommentController = require("../controllers/comment-controller");
+const CommunityListController = require("../controllers/community-list-controller");
 const router = express.Router();
 
 router.post("/top5list", auth.verify, Top5ListController.createTop5List);
@@ -21,5 +22,10 @@ router.get("/logout", UserController.logoutUser);
 router.post("/comments", CommentController.createComment);
 router.get("/comments", CommentController.getComments);
 router.delete("/comments", auth.verify, CommentController.deleteListComments);
+
+router.post("/communityList", auth.verify, CommunityListController.createCommunityList);
+router.put("/communityList/:id", auth.verify, CommunityListController.updateCommunityList);
+router.get("/communityList", CommunityListController.getCommunityLists);
+router.get("/communityList/:id", CommunityListController.getCommunityListById);
 
 module.exports = router;

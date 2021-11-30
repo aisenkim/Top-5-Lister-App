@@ -30,7 +30,8 @@ export const GlobalStoreActionType = {
     SET_CURRENT_LIST_COMMENTS: "SET_CURRENT_LIST_COMMENTS",
     SET_SEARCH_TEXT: "SET_SEARCH_TEXT",
     SET_TOOL_MENU: "SET_TOOL_MENU",
-    CHECK_LIST_TITLE: "CHECK_LIST_TITLE"
+    CHECK_LIST_TITLE: "CHECK_LIST_TITLE",
+    SET_COMMUNITY_LIST: "SET_COMMUNITY_LIST"
 }
 
 // WE'LL NEED THIS TO PROCESS TRANSACTIONS
@@ -50,7 +51,8 @@ function GlobalStoreContextProvider(props) {
         currentListComments: [],
         searchText: "",
         toolMenu: "home",
-        hasSameTitle: null
+        hasSameTitle: null,
+        communityLists: []
     });
     const history = useHistory();
 
@@ -74,7 +76,8 @@ function GlobalStoreContextProvider(props) {
                     currentListComments: store.currentListComments,
                     searchText: store.searchText,
                     toolMenu: store.toolMenu,
-                    hasSameTitle: store.hasSameTitle
+                    hasSameTitle: store.hasSameTitle,
+                    communityLists: store.communityLists
                 });
             }
             case GlobalStoreActionType.CHECK_LIST_TITLE: {
@@ -88,7 +91,8 @@ function GlobalStoreContextProvider(props) {
                     currentListComments: store.currentListComments,
                     searchText: store.searchText,
                     toolMenu: store.toolMenu,
-                    hasSameTitle: payload
+                    hasSameTitle: payload,
+                    communityLists: store.communityLists
                 });
             }
             // STOP EDITING THE CURRENT LIST
@@ -103,7 +107,8 @@ function GlobalStoreContextProvider(props) {
                     currentListComments: store.currentListComments,
                     searchText: store.searchText,
                     toolMenu: store.toolMenu,
-                    hasSameTitle: store.hasSameTitle
+                    hasSameTitle: store.hasSameTitle,
+                    communityLists: store.communityLists
                 })
             }
             // CREATE A NEW LIST
@@ -118,7 +123,8 @@ function GlobalStoreContextProvider(props) {
                     currentListComments: store.currentListComments,
                     searchText: store.searchText,
                     toolMenu: store.toolMenu,
-                    hasSameTitle: store.hasSameTitle
+                    hasSameTitle: store.hasSameTitle,
+                    communityLists: store.communityLists
                 })
             }
             // GET ALL THE LISTS SO WE CAN PRESENT THEM
@@ -133,7 +139,8 @@ function GlobalStoreContextProvider(props) {
                     currentListComments: store.currentListComments,
                     searchText: store.searchText,
                     toolMenu: payload.toolMenu,
-                    hasSameTitle: store.hasSameTitle
+                    hasSameTitle: store.hasSameTitle,
+                    communityLists: store.communityLists
                 });
             }
             // PREPARE TO DELETE A LIST
@@ -148,7 +155,8 @@ function GlobalStoreContextProvider(props) {
                     currentListComments: store.currentListComments,
                     searchText: store.searchText,
                     toolMenu: store.toolMenu,
-                    hasSameTitle: store.hasSameTitle
+                    hasSameTitle: store.hasSameTitle,
+                    communityLists: store.communityLists
                 });
             }
             // PREPARE TO DELETE A LIST
@@ -163,7 +171,8 @@ function GlobalStoreContextProvider(props) {
                     currentListComments: store.currentListComments,
                     searchText: store.searchText,
                     toolMenu: store.toolMenu,
-                    hasSameTitle: store.hasSameTitle
+                    hasSameTitle: store.hasSameTitle,
+                    communityLists: store.communityLists
                 });
             }
             // UPDATE A LIST
@@ -178,7 +187,8 @@ function GlobalStoreContextProvider(props) {
                     currentListComments: store.currentListComments,
                     searchText: store.searchText,
                     toolMenu: store.toolMenu,
-                    hasSameTitle: store.hasSameTitle
+                    hasSameTitle: store.hasSameTitle,
+                    communityLists: store.communityLists
                 });
             }
             // START EDITING A LIST ITEM
@@ -193,7 +203,8 @@ function GlobalStoreContextProvider(props) {
                     currentListComments: store.currentListComments,
                     searchText: store.searchText,
                     toolMenu: store.toolMenu,
-                    hasSameTitle: store.hasSameTitle
+                    hasSameTitle: store.hasSameTitle,
+                    communityLists: store.communityLists
                 });
             }
             // START EDITING A LIST NAME
@@ -208,7 +219,8 @@ function GlobalStoreContextProvider(props) {
                     currentListComments: store.currentListComments,
                     searchText: store.searchText,
                     toolMenu: store.toolMenu,
-                    hasSameTitle: store.hasSameTitle
+                    hasSameTitle: store.hasSameTitle,
+                    communityLists: store.communityLists
                 });
             }
             // SET CURRENT LIST'S COMMENTS FOR RENDERING
@@ -223,7 +235,8 @@ function GlobalStoreContextProvider(props) {
                     currentListComments: payload,
                     searchText: store.searchText,
                     toolMenu: store.toolMenu,
-                    hasSameTitle: store.hasSameTitle
+                    hasSameTitle: store.hasSameTitle,
+                    communityLists: store.communityLists
                 });
             }
             // SET CURRENT LIST'S COMMENTS FOR RENDERING
@@ -238,7 +251,8 @@ function GlobalStoreContextProvider(props) {
                     currentListComments: store.currentListComments,
                     searchText: payload,
                     toolMenu: store.toolMenu,
-                    hasSameTitle: store.hasSameTitle
+                    hasSameTitle: store.hasSameTitle,
+                    communityLists: store.communityLists
                 });
             }
             // SET CURRENT LIST'S COMMENTS FOR RENDERING
@@ -253,7 +267,23 @@ function GlobalStoreContextProvider(props) {
                     currentListComments: store.currentListComments,
                     searchText: store.searchText,
                     toolMenu: payload,
-                    hasSameTitle: store.hasSameTitle
+                    hasSameTitle: store.hasSameTitle,
+                    communityLists: store.communityLists
+                });
+            }
+            case GlobalStoreActionType.SET_COMMUNITY_LIST: {
+                return setStore({
+                    idNamePairs: store.idNamePairs,
+                    currentList: store.currentList,
+                    newListCounter: store.newListCounter,
+                    isListNameEditActive: false,
+                    isItemEditActive: false,
+                    listMarkedForDeletion: null,
+                    currentListComments: store.currentListComments,
+                    searchText: store.searchText,
+                    toolMenu: payload.toolMenu,
+                    hasSameTitle: store.hasSameTitle,
+                    communityLists: payload.communityLists
                 });
             }
             default:
@@ -335,6 +365,56 @@ function GlobalStoreContextProvider(props) {
         } else {
             console.log("API FAILED TO CREATE A NEW LIST");
         }
+    }
+
+    store.createCommunityList = async function () {
+        console.log("current list is: ", store.currentList)
+        let communityItems = []
+        let counter = 5; // FOR POINT SYSTEM (5,4,3,2,1)
+        store.currentList.items.forEach((item, idx) => {
+            communityItems.push({name: item, points: counter})
+            counter -= 1;
+        })
+        const payload = {
+            name: store.currentList.name,
+            items: communityItems,
+            views: 0,
+            like: [],
+            dislike: []
+        }
+        const response = await api.createCommunityList(payload);
+    }
+
+    store.getCommunityLists = async function (toolMenu) {
+        let response = await api.getCommunityLists();
+        if (response.data.success) {
+            const communityLists = response.data.communityLists;
+            storeReducer({
+                type: GlobalStoreActionType.SET_COMMUNITY_LIST,
+                payload: {communityLists, toolMenu}
+            })
+        } else {
+            console.log("API FAILED TO GET THE COMMUNITY LISTS")
+        }
+    }
+
+    store.getCommunityListById = async function (id) {
+        const response = await api.getCommunityListById(id);
+        // let items = []
+        // if(response.data.success) {
+        //    response.data.communityList.items.forEach(item => {
+        //        items.push(item.name)
+        //    })
+        //     response.data.communityList.items = items;
+        // }
+        return response.data.communityList;
+    }
+
+    store.setCommunityListToolMenu = function (toolMenu) {
+        storeReducer({
+            type: GlobalStoreActionType.SET_TOOL_MENU,
+            payload: toolMenu
+        })
     }
 
     /**
@@ -478,8 +558,8 @@ function GlobalStoreContextProvider(props) {
         }
     }
 
-    store.checkHasTop5ListTitle = async function(title) {
-        const sameTitleList = await api.getTop5ListByTitle(title)
+    store.checkHasTop5ListTitle = async function (title) {
+        const sameTitleList = await api.getTop5ListByTitle(title, auth.user.email)
         if (sameTitleList.data.foundList) {
             return true
         } else {
@@ -502,15 +582,13 @@ function GlobalStoreContextProvider(props) {
     store.updateCurrentListViews = async function (id, list) {
         list.views += 1
         const response = await api.updateTop5ListById(id, list)
-        // if (response.data.success) {
         await store.loadIdNamePairs(store.toolMenu, "-createAt")
-        // if (response.data.success) {
-        //     storeReducer({
-        //         type: GlobalStoreActionType.SET_CURRENT_LIST,
-        //         payload: list
-        //     });
-        // }
+    }
 
+    store.updateCurrentListViewsCommunity = async function (id, list) {
+        list.views += 1
+        const response = await api.updateCommunityListById(id, list)
+        await store.getCommunityLists(store.toolMenu)
     }
 
     // THIS FUNCTION ENABLES THE PROCESS OF EDITING A LIST NAME
@@ -565,7 +643,7 @@ function GlobalStoreContextProvider(props) {
         }
     }
 
-    store.deleteListComments = async function(listId) {
+    store.deleteListComments = async function (listId) {
         const response = await api.deleteTop5ListComments(listId);
         if (response.data.success) {
             store.loadIdNamePairs(store.toolMenu, "-createAt");
@@ -600,7 +678,7 @@ function GlobalStoreContextProvider(props) {
         if (shouldIncreaseDislike)
             store.currentList.dislike += 1
         else
-            store.currentList.dislike-= 1
+            store.currentList.dislike -= 1
 
         storeReducer({
             type: GlobalStoreActionType.SET_CURRENT_LIST,
@@ -608,26 +686,50 @@ function GlobalStoreContextProvider(props) {
         });
     }
 
-    store.updateLikeDislikeToServer = async function(listId, isLikeCounter, isDislikeCounter) {
+    store.updateLikeDislikeToServer = async function (listId, isLikeCounter, isDislikeCounter) {
         let response = await api.getTop5ListById(listId);
         if (response.data.success) {
             let top5List = response.data.top5List;
 
-            if(isLikeCounter === 1) {
+            if (isLikeCounter === 1) {
                 top5List.like.push(top5List.ownerEmail)
-            }else if(isLikeCounter === -1) {
+            } else if (isLikeCounter === -1) {
                 top5List.like = top5List.like.filter((email) => email !== auth.user.email);
             }
 
-            if(isDislikeCounter === 1) {
+            if (isDislikeCounter === 1) {
                 top5List.dislike.push(top5List.ownerEmail)
-            } else if(isDislikeCounter === -1) {
+            } else if (isDislikeCounter === -1) {
                 top5List.dislike = top5List.dislike.filter((email) => email !== auth.user.email);
             }
 
             response = await api.updateTop5ListById(top5List._id, top5List);
             if (response.data.success) {
                 await store.loadIdNamePairs(store.toolMenu, "-createAt")
+            }
+        }
+    }
+
+    store.updateLikeDislikeCommunityListToServer = async function (listId, isLikeCounter, isDislikeCounter, userEmail) {
+        let response = await api.getCommunityListById(listId);
+        if (response.data.success) {
+            let communityList = response.data.communityList;
+
+            if (isLikeCounter === 1) {
+                communityList.like.push(userEmail)
+            } else if (isLikeCounter === -1) {
+                communityList.like = communityList.like.filter((email) => email !== auth.user.email);
+            }
+
+            if (isDislikeCounter === 1) {
+                communityList.dislike.push(userEmail)
+            } else if (isDislikeCounter === -1) {
+                communityList.dislike = communityList.dislike.filter((email) => email !== auth.user.email);
+            }
+
+            response = await api.updateCommunityListById(communityList._id, communityList);
+            if (response.data.success) {
+                await store.getCommunityLists(store.toolMenu)
             }
         }
     }

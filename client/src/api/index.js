@@ -29,7 +29,7 @@ export const getTop5ListPairs = (toolMenu, sortMenu) => api.get(`/top5listpairs?
 export const updateTop5ListById = (id, payload) => api.put(`/top5list/${id}`, payload)
 export const deleteTop5ListById = (id) => api.delete(`/top5list/${id}`)
 export const getTop5ListById = (id) => api.get(`/top5list/${id}`)
-export const getTop5ListByTitle = (title) => api.get(`/top5list/title?listTitle=${title}`)
+export const getTop5ListByTitle = (title, userId) => api.get(`/top5list/title?listTitle=${title}&userId=${userId}`)
 
 export const getLoggedIn = () => api.get(`/loggedIn/`);
 export const registerUser = (payload) => api.post(`/register/`, payload)
@@ -39,6 +39,11 @@ export const logoutUser = () => api.get(`/logout/`)
 export const createComment = (payload) => api.post('/comments', payload)
 export const getComments = (listId) => api.get(`/comments?listId=${listId}`)
 export const deleteTop5ListComments = (listId) => api.delete(`/comments?listId=${listId}`)
+
+export const getCommunityListById = (id) => api.get(`/communityList/${id}`)
+export const getCommunityLists = () => api.get(`/communityList/`)
+export const createCommunityList = (payload) => api.post(`/communityList/`, payload)
+export const updateCommunityListById = (id, payload) => api.put(`/communityList/${id}`, payload)
 
 const apis = {
     createTop5List,
@@ -56,7 +61,12 @@ const apis = {
 
     createComment,
     getComments,
-    deleteTop5ListComments
+    deleteTop5ListComments,
+
+    createCommunityList,
+    getCommunityLists,
+    getCommunityListById,
+    updateCommunityListById
 }
 
 export default apis
