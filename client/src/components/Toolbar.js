@@ -74,11 +74,12 @@ const MenuToolbar = (props) => {
             <IconButton onClick={handleCommunityLists} color="inherit">
                 <FunctionsRoundedIcon style={{fontSize: FONTSIZE}}/>
             </IconButton>
-            <TextField id="filled-basic" label="Search" variant="filled" style={{
+            <TextField label="Search"  style={{
                 width: '100%',
                 background: 'rgb(243, 246, 249)',
                 borderRadius: '10px',
-                textDecoration: 'none'
+                textDecoration: 'none',
+                margin:'normal'
             }}
                        onChange={handleUpdateText}/>
             <div id="sort-section">

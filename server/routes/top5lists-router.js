@@ -24,8 +24,10 @@ router.get("/comments", CommentController.getComments);
 router.delete("/comments", auth.verify, CommentController.deleteListComments);
 
 router.post("/communityList", auth.verify, CommunityListController.createCommunityList);
+router.put("/communityList/items", auth.verify, CommunityListController.updateCommunityListItems);
 router.put("/communityList/:id", auth.verify, CommunityListController.updateCommunityList);
 router.get("/communityList", CommunityListController.getCommunityLists);
 router.get("/communityList/:id", CommunityListController.getCommunityListById);
+router.delete("/communityList", auth.verify, CommunityListController.deleteCommunityListItemIfEmpty);
 
 module.exports = router;

@@ -168,7 +168,7 @@ function ListCard(props) {
     let cardElement =
         <ListItem
             id={communityList._id}
-            key={communityList._id}
+            key={props.idx}
             sx={{marginTop: '15px', display: 'flex', p: 1}}
             button
             onClick={(event) => {

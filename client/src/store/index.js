@@ -1,7 +1,7 @@
 import {createContext, useContext, useState} from 'react'
 import {useHistory} from 'react-router-dom'
 import jsTPS from '../common/jsTPS'
-import api, {getTop5ListByTitle} from '../api'
+import api, {deleteCommunityListItemIfEmpty, getTop5ListByTitle} from '../api'
 import MoveItem_Transaction from '../transactions/MoveItem_Transaction'
 import UpdateItem_Transaction from '../transactions/UpdateItem_Transaction'
 import AuthContext from '../auth'
@@ -400,7 +400,6 @@ function GlobalStoreContextProvider(props) {
 
     store.getCommunityListById = async function (id) {
         const response = await api.getCommunityListById(id);
-        // let items = []
         // if(response.data.success) {
         //    response.data.communityList.items.forEach(item => {
         //        items.push(item.name)
@@ -415,6 +414,28 @@ function GlobalStoreContextProvider(props) {
             type: GlobalStoreActionType.SET_TOOL_MENU,
             payload: toolMenu
         })
+    }
+
+    store.updateCommunityListItems = async function(deleteListName, deleteListItems) {
+        const payload = {
+            deleteListName,
+            deleteListItems
+        }
+        const response = await api.updateCommunityListItems(payload);
+        if (response.data.success) {
+            console.log("Success")
+        } else {
+            console.log("API FAILED TO UPDATE THE COMMUNITY LISTS")
+        }
+    }
+
+    store.deleteCommunityListItemIfEmpty = async function (deleteListName) {
+        const response = await api.deleteCommunityListItemIfEmpty(deleteListName)
+        if (response.data.success) {
+            console.log("Success")
+        } else {
+            console.log("API FAILED TO DELETE THE COMMUNITY LISTS")
+        }
     }
 
     /**
@@ -582,7 +603,7 @@ function GlobalStoreContextProvider(props) {
     store.updateCurrentListViews = async function (id, list) {
         list.views += 1
         const response = await api.updateTop5ListById(id, list)
-        await store.loadIdNamePairs(store.toolMenu, "-createAt")
+        await store.loadIdNamePairs(store.toolMenu, "-createdAt")
     }
 
     store.updateCurrentListViewsCommunity = async function (id, list) {

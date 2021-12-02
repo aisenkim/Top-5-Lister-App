@@ -72,11 +72,12 @@ const HomeScreen = () => {
                         .filter((pair) => {
                             return pair.name.toLowerCase().includes(store.searchText.toLowerCase());
                         })
-                        .map((pair) => (
+                        .map((pair, idx) => (
                             <CommunityListCard
                                 key={pair._id}
                                 communityList={pair}
                                 selected={false}
+                                idx={idx}
                             />
                         ))
                 }

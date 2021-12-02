@@ -151,9 +151,17 @@ function ListCard(props) {
     }
 
     async function deleteMarkedList() {
+        const deleteListName = store.listMarkedForDeletion.name;
+        const deleteListItems = store.listMarkedForDeletion.items;
+        const deleteListPublished = store.listMarkedForDeletion.published;
         await store.deleteMarkedList();
         // DELETE LIST'S COMMENTS
         await store.deleteListComments(idNamePair._id)
+        // UPDATE VOTES IN COMMUNITY LIST AND DELETE IF ALL VOTES == 0
+        if (deleteListPublished) {
+            await store.updateCommunityListItems(deleteListName, deleteListItems)
+            await store.deleteCommunityListItemIfEmpty(deleteListName);
+        }
     }
 
     function handleKeyPress(event) {
@@ -277,7 +285,8 @@ function ListCard(props) {
                             </GridItem>
                             <GridItem item xs={6} sx={{height: '320px'}}>
                                 <CommentSection listId={idNamePair._id} currentComments={currentComments}
-                                                setCurrentComments={setCurrentComments} isPublished={idNamePair.published}/>
+                                                setCurrentComments={setCurrentComments}
+                                                isPublished={idNamePair.published}/>
                             </GridItem>
                         </GridItem>
                     </Collapse>
