@@ -41,7 +41,7 @@ export const getComments = (listId) => api.get(`/comments?listId=${listId}`)
 export const deleteTop5ListComments = (listId) => api.delete(`/comments?listId=${listId}`)
 
 export const getCommunityListById = (id) => api.get(`/communityList/${id}`)
-export const getCommunityLists = () => api.get(`/communityList/`)
+export const getCommunityLists = (sortMenu) => api.get(`/communityList?sortMenu=${sortMenu}`)
 export const createCommunityList = (payload) => api.post(`/communityList/`, payload)
 export const updateCommunityListItems = (payload) => api.put(`/communityList/items`, payload)
 export const updateCommunityListById = (id, payload) => api.put(`/communityList/${id}`, payload)

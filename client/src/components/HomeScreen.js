@@ -29,7 +29,7 @@ const HomeScreen = () => {
             store.loadIdNamePairs("home", "-createdAt"); // GETTING LISTPAIRS FOR HOME MENU
         } else {
             store.loadIdNamePairs("community", "-createdAt"); // GETTING LISTPAIRS FOR HOME MENU
-            store.getCommunityLists("community");
+            store.getCommunityLists("community", "-createdAt");
         }
     }, []);
 
@@ -63,7 +63,6 @@ const HomeScreen = () => {
                 }
             </List>;
     } else if (store && store.toolMenu === "community") {
-        console.log(store.communityLists);
         listCard =
             <List sx={{width: '90%', left: '5%', bgcolor: '#bdbdbd'}}>
                 {

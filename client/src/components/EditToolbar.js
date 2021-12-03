@@ -18,7 +18,6 @@ function EditToolbar() {
         store.clearAllTransactions();
         store.closeCurrentList();
     }
-    console.log("ran here")
     let editStatus = false;
     if (store.isItemEditActive) {
         editStatus = true;

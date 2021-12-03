@@ -30,11 +30,11 @@ const MenuToolbar = (props) => {
 
     const handleUsersLists = async () => {
         // props.setToolMenu("users")
-        await store.loadIdNamePairs("users", "-createAt");
+        await store.loadIdNamePairs("users", "-createdAt");
     }
 
     const handleCommunityLists = async () => {
-        await store.getCommunityLists("community");
+        await store.getCommunityLists("community", "-createdAt");
     }
 
     function handleUpdateText(event) {
@@ -52,7 +52,11 @@ const MenuToolbar = (props) => {
     // CALL SORTED LIST TO SERVER AND CLOSE MENU
     const handleCloseMenu = async (event) => {
         const {myValue} = event.currentTarget.dataset;
-        await store.loadIdNamePairs(store.toolMenu, myValue)
+        if(store.toolMenu === "community") {
+           await store.getCommunityLists("community", myValue)
+        } else {
+            await store.loadIdNamePairs(store.toolMenu, myValue)
+        }
         setAnchorEl(null);
     };
 

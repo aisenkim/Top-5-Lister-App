@@ -112,7 +112,6 @@ getTop5ListByTitle = async (req, res) => {
     const listTitle = req.query.listTitle;
     const ownerEmail = req.query.userId;
     await Top5List.findOne({name: listTitle, published: true, ownerEmail}, (err, list) => {
-        console.log("#$#$#$#$#$#$: ", list)
         if(!list) {
             return res.status(200).json({success:true, foundList: false})
         }

@@ -368,7 +368,6 @@ function GlobalStoreContextProvider(props) {
     }
 
     store.createCommunityList = async function () {
-        console.log("current list is: ", store.currentList)
         let communityItems = []
         let counter = 5; // FOR POINT SYSTEM (5,4,3,2,1)
         store.currentList.items.forEach((item, idx) => {
@@ -385,8 +384,8 @@ function GlobalStoreContextProvider(props) {
         const response = await api.createCommunityList(payload);
     }
 
-    store.getCommunityLists = async function (toolMenu) {
-        let response = await api.getCommunityLists();
+    store.getCommunityLists = async function (toolMenu, sort) {
+        let response = await api.getCommunityLists(sort);
         if (response.data.success) {
             const communityLists = response.data.communityLists;
             storeReducer({
@@ -718,15 +717,15 @@ function GlobalStoreContextProvider(props) {
         let response = await api.getTop5ListById(listId);
         if (response.data.success) {
             let top5List = response.data.top5List;
-
-            if (isLikeCounter === 1) {
-                top5List.like.push(top5List.ownerEmail)
+            // ONLY UPDATE LIKE IF USER HASN'T ALREADY LIKED
+            if (isLikeCounter === 1 && !top5List.like.includes(auth.user.email)) {
+                top5List.like.push(auth.user.email)
             } else if (isLikeCounter === -1) {
                 top5List.like = top5List.like.filter((email) => email !== auth.user.email);
             }
 
-            if (isDislikeCounter === 1) {
-                top5List.dislike.push(top5List.ownerEmail)
+            if (isDislikeCounter === 1 && !top5List.dislike.includes(auth.user.email)) {
+                top5List.dislike.push(auth.user.email)
             } else if (isDislikeCounter === -1) {
                 top5List.dislike = top5List.dislike.filter((email) => email !== auth.user.email);
             }

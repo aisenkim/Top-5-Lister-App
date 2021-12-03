@@ -72,7 +72,8 @@ createCommunityList = (req, res) => {
 }
 
 getCommunityLists = async (req, res) => {
-    await CommunityList.find({}, (err, communityLists) => {
+    const sortMenu = req.query.sortMenu
+    await CommunityList.find({}, null, {sort: sortMenu} ,(err, communityLists) => {
         if (err) {
             return res.status(400).json({success: false, error: err});
         }
