@@ -457,6 +457,13 @@ function GlobalStoreContextProvider(props) {
         }
     }
 
+    store.setToolMenu = function(toolMenu) {
+        storeReducer({
+            type: GlobalStoreActionType.LOAD_ID_NAME_PAIRS,
+            payload: {pairsArray: store.idNamePairs, toolMenu}
+        });
+    }
+
     // THE FOLLOWING 5 FUNCTIONS ARE FOR COORDINATING THE DELETION
     // OF A LIST, WHICH INCLUDES USING A VERIFICATION MODAL. THE
     // FUNCTIONS ARE markListForDeletion, deleteList, deleteMarkedList,

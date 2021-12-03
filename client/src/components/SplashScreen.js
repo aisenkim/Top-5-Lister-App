@@ -6,6 +6,7 @@ import {styled} from "@mui/material/styles";
 import {useHistory} from "react-router-dom";
 import {useContext} from "react";
 import AuthContext from "../auth";
+import {GlobalStoreContext} from "../store";
 
 const GridContainer = styled(Grid)`
     margin-top: 5%;
@@ -14,6 +15,7 @@ const GridContainer = styled(Grid)`
 export default function SplashScreen() {
     const history = useHistory();
     const {auth} = useContext(AuthContext)
+    const {store} = useContext(GlobalStoreContext);
 
     const handleCreatAccount = () => {
              history.push("/register")
@@ -25,6 +27,7 @@ export default function SplashScreen() {
 
     const handleGuest = () => {
         auth.setGuest(true);
+        store.setToolMenu("community")
         history.push("/")
     }
 

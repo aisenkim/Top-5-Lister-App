@@ -9,12 +9,14 @@ import {useContext, useState} from "react";
 import {GlobalStoreContext} from "../store";
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
+import AuthContext from "../auth";
 
 // FOR FONTSIZE OF ICON
 const FONTSIZE = 50;
 
 const MenuToolbar = (props) => {
     const {store} = useContext(GlobalStoreContext);
+    const {auth} = useContext(AuthContext);
 
     const handleHomeLists = async () => {
         // props.setToolMenu("home")
@@ -31,8 +33,8 @@ const MenuToolbar = (props) => {
         await store.loadIdNamePairs("users", "-createAt");
     }
 
-    const handleCommunityLists = async() => {
-       await store.getCommunityLists("community");
+    const handleCommunityLists = async () => {
+        await store.getCommunityLists("community");
     }
 
     function handleUpdateText(event) {
@@ -61,9 +63,17 @@ const MenuToolbar = (props) => {
 
     return (
         <div id="toolbar-container">
-            <IconButton onClick={handleHomeLists} color="inherit">
-                <HomeRoundedIcon style={{fontSize: FONTSIZE}}/>
-            </IconButton>
+            {
+                auth.isGuest ?
+                    <IconButton onClick={handleHomeLists} color="inherit" disabled>
+                        <HomeRoundedIcon style={{fontSize: FONTSIZE}}/>
+                    </IconButton>
+                    :
+                    <IconButton onClick={handleHomeLists} color="inherit">
+                        <HomeRoundedIcon style={{fontSize: FONTSIZE}}/>
+                    </IconButton>
+
+            }
             <IconButton onClick={handleAllLists} color="inherit">
                 <GroupsOutlinedIcon style={{fontSize: FONTSIZE}}/>
             </IconButton>
@@ -73,12 +83,12 @@ const MenuToolbar = (props) => {
             <IconButton onClick={handleCommunityLists} color="inherit">
                 <FunctionsRoundedIcon style={{fontSize: FONTSIZE}}/>
             </IconButton>
-            <TextField label="Search"  style={{
+            <TextField label="Search" style={{
                 width: '100%',
                 background: 'rgb(243, 246, 249)',
                 borderRadius: '10px',
                 textDecoration: 'none',
-                margin:'normal'
+                margin: 'normal'
             }}
                        onChange={handleUpdateText}/>
             <div id="sort-section">

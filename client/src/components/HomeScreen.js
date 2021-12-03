@@ -26,8 +26,9 @@ const HomeScreen = () => {
 
     useEffect(() => {
         if (auth.user) {
-            store.loadIdNamePairs(store.toolMenu, "-createdAt"); // GETTING LISTPAIRS FOR HOME MENU
+            store.loadIdNamePairs("home", "-createdAt"); // GETTING LISTPAIRS FOR HOME MENU
         } else {
+            store.loadIdNamePairs("community", "-createdAt"); // GETTING LISTPAIRS FOR HOME MENU
             store.getCommunityLists("community");
         }
     }, []);
@@ -37,7 +38,7 @@ const HomeScreen = () => {
     }
 
     let listCard = "";
-    if (store && store.toolMenu !== "community") {
+    if (store && store.toolMenu !== "community" ) {
         listCard =
             <List sx={{width: '90%', left: '5%', bgcolor: '#bdbdbd'}}>
                 {

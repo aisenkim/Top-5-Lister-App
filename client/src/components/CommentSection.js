@@ -6,6 +6,7 @@ import Box from "@mui/material/Box";
 import {useContext, useEffect, useState} from "react";
 import {GlobalStoreContext} from "../store";
 import Typography from "@mui/material/Typography";
+import AuthContext from "../auth";
 
 const StyledInputElement = styled('input')`
   width: 80%;
@@ -41,6 +42,7 @@ const CommentBox = styled(Box)`
 
 function CommentSection(props) {
     const {store} = useContext(GlobalStoreContext);
+    const { auth } = useContext(AuthContext);
     const [text, setText] = useState("");
 
     const [anchorEl, setAnchorEl] = useState(null);
@@ -88,7 +90,12 @@ function CommentSection(props) {
                      ))}
                 </List>
             </div>
-            <StyledTextInput label="Comment" onKeyPress={handleKeyPress} onChange={handleUpdateText} value={text}/>
+            {
+                auth.isGuest ?
+                    <StyledTextInput label="Comment" onKeyPress={handleKeyPress} onChange={handleUpdateText} value={text} disabled/>
+                    :
+                    <StyledTextInput label="Comment" onKeyPress={handleKeyPress} onChange={handleUpdateText} value={text} />
+            }
             <Popover
             id={id}
             open={open}
