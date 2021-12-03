@@ -87,9 +87,10 @@ function WorkspaceScreen() {
                     left: "5.5%",
                     top: "10%",
                     bgcolor: "#283593",
-                    height: "62%",
+                    height: "66%",
                     borderRadius: "10px",
-                    // overflow: "scroll",
+                    border: "3px solid black",
+                    overflow: "scroll",
                 }}
             >
                 <StyledTextInput
@@ -145,7 +146,7 @@ function WorkspaceScreen() {
                 <Stack
                     direction="row"
                     spacing={2}
-                    sx={{width: "20%", marginTop: "43px", float: "right"}}
+                    sx={{width: "50%", marginTop: "10px", marginLeft: "40%", float: "left"}}
                 >
                     <Button variant="contained" size="large" onClick={handleSaveButton}>
                         Save

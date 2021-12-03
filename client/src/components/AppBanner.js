@@ -1,5 +1,5 @@
 import {useContext, useState} from 'react';
-import {Link} from 'react-router-dom'
+import {Link, useHistory} from 'react-router-dom'
 import AuthContext from '../auth';
 import {GlobalStoreContext} from '../store'
 import EditToolbar from './EditToolbar'
@@ -16,6 +16,7 @@ import {blue} from '@mui/material/colors'
 
 export default function AppBanner() {
     const {auth} = useContext(AuthContext);
+    const history = useHistory();
     const {store} = useContext(GlobalStoreContext);
     const [anchorEl, setAnchorEl] = useState(null);
     const isMenuOpen = Boolean(anchorEl);
@@ -31,6 +32,12 @@ export default function AppBanner() {
     const handleLogout = () => {
         handleMenuClose();
         auth.logoutUser();
+    }
+
+    const handleGuestSignout = () => {
+        if(auth.isGuest)
+            auth.setGuest(false)
+        history.push('/')
     }
 
     const menuId = 'primary-search-account-menu';
@@ -117,8 +124,9 @@ export default function AppBanner() {
                         noWrap
                         component="div"
                         sx={{display: {xs: 'none', sm: 'block'}}}
+                        onClick={handleGuestSignout}
                     >
-                        <Link style={{textDecoration: 'none', color: 'white'}} to='/'>T<sup>5</sup>L</Link>
+                        <span style={{textDecoration: 'none', color: 'white', cursor: 'pointer'}} >T<sup>5</sup>L</span>
                     </Typography>
                     <Box sx={{flexGrow: 1}}>{editToolbar}</Box>
                     <Box sx={{display: {xs: 'none', md: 'flex'}}}>

@@ -50,7 +50,6 @@ const MenuToolbar = (props) => {
     // CALL SORTED LIST TO SERVER AND CLOSE MENU
     const handleCloseMenu = async (event) => {
         const {myValue} = event.currentTarget.dataset;
-        console.log(myValue)
         await store.loadIdNamePairs(store.toolMenu, myValue)
         setAnchorEl(null);
     };

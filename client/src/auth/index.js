@@ -12,7 +12,8 @@ export const AuthActionType = {
     LOGIN_USER: "LOGIN_USER",
     SET_LOGGED_IN: "SET_LOGGED_IN",
     LOGOUT_USER: "LOGOUT_USER",
-    SET_ERROR_MESSAGE : "SET_ERROR MESSAGE"
+    SET_ERROR_MESSAGE : "SET_ERROR MESSAGE",
+    SET_IS_GUEST: "SET_IS_GUEST"
 };
 
 function AuthContextProvider(props) {
@@ -20,6 +21,7 @@ function AuthContextProvider(props) {
         user: null,
         loggedIn: false,
         errorMessage: null,
+        isGuest: false
     });
     const history = useHistory();
 
@@ -44,29 +46,40 @@ function AuthContextProvider(props) {
                 return setAuth({
                     user: payload.user,
                     loggedIn: true,
+                    isGuest: false
                 });
             }
             case AuthActionType.LOGIN_USER: {
                 return setAuth({
                     user: payload.user,
                     loggedIn: true,
+                    isGuest: false
                 });
             }
             case AuthActionType.SET_LOGGED_IN: {
                 return setAuth({
                     user: payload.user,
                     loggedIn: true,
+                    isGuest: false
                 });
             }
             case AuthActionType.LOGOUT_USER: {
                 return setAuth({
                     user: payload.user,
-                    loggedIn: false
+                    loggedIn: false,
+                    isGuest: false
                 })
             }
             case AuthActionType.SET_ERROR_MESSAGE: {
                 return setAuth( {
                     errorMessage: payload.errorMessage,
+                })
+            }
+            case AuthActionType.SET_IS_GUEST: {
+                return setAuth({
+                    user: null,
+                    loggedIn: false,
+                    isGuest: payload.isGuest
                 })
             }
             default:
@@ -177,6 +190,15 @@ function AuthContextProvider(props) {
             type: AuthActionType.SET_ERROR_MESSAGE,
             payload: {
                 errorMessage : null
+            }
+        })
+    }
+
+    auth.setGuest = function(isGuest) {
+        authReducer({
+            type: AuthActionType.SET_IS_GUEST,
+            payload: {
+                isGuest: isGuest
             }
         })
     }

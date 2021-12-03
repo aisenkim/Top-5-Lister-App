@@ -7,7 +7,10 @@ import MenuToolbar from "./Toolbar";
 export default function HomeWrapper() {
     const { auth } = useContext(AuthContext);
 
-    if (auth.loggedIn)
+    console.log("IS IT GUEST: ", auth.isGuest)
+    console.log("IST IT USER: ", auth.user)
+
+    if (auth.loggedIn || auth.isGuest)
         return (
             <>
                 <MenuToolbar/>
