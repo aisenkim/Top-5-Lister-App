@@ -38,7 +38,7 @@ export default function SplashScreen() {
             <GridContainer container spacing={2} direction="row"
                   justifyContent="center"
                   alignItems="center">
-                <Grid item sx={4}>
+                <Grid item xs={4}>
                     <Card sx={{ maxWidth: 345, background: "linear-gradient(to left, #283593, #fff3e0)"}}>
                         <CardActionArea>
                             <CardMedia
@@ -61,7 +61,8 @@ export default function SplashScreen() {
                             </CardContent>
                         </CardActionArea>
                     </Card>
-                </Grid><Grid item sx={4}>
+                </Grid>
+                <Grid item xs={4}>
                     <Card sx={{ maxWidth: 345, background: "linear-gradient(to bottom, #283593, #fff3e0)"}}>
                         <CardActionArea>
                             <CardMedia
@@ -84,7 +85,8 @@ export default function SplashScreen() {
                             </CardContent>
                         </CardActionArea>
                     </Card>
-                </Grid><Grid item sx={4}>
+                </Grid>
+                <Grid item >
                     <Card sx={{ maxWidth: 345, background: "linear-gradient(to right, #283593, #fff3e0)"}}>
                         <CardActionArea>
                             <CardMedia
@@ -108,7 +110,7 @@ export default function SplashScreen() {
                         </CardActionArea>
                     </Card>
                 </Grid>
-                <Grid item sx={12}  style={{marginTop: '5%'}}>
+                <Grid item xs={12}  style={{marginTop: '5%'}}>
                     <Typography variant="body2" color="text.secondary" color="black">
                        Developed By: Aisen Kim
                     </Typography>
