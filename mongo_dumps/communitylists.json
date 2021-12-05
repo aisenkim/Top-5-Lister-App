@@ -1,0 +1,317 @@
+[{
+  "_id": {
+    "$oid": "61acdd23fb6bb5370b2f825d"
+  },
+  "like": [
+    "user10@gmail.com"
+  ],
+  "dislike": [],
+  "name": "Favorite Numbers",
+  "items": [
+    {
+      "_id": {
+        "$oid": "61acdd23fb6bb5370b2f825e"
+      },
+      "name": "1",
+      "points": 6
+    },
+    {
+      "_id": {
+        "$oid": "61acdd23fb6bb5370b2f825f"
+      },
+      "name": "2",
+      "points": 11
+    },
+    {
+      "_id": {
+        "$oid": "61acdd23fb6bb5370b2f8260"
+      },
+      "name": "3",
+      "points": 10
+    },
+    {
+      "_id": {
+        "$oid": "61acdd23fb6bb5370b2f8261"
+      },
+      "name": "4",
+      "points": 9
+    },
+    {
+      "_id": {
+        "$oid": "61acdd23fb6bb5370b2f8262"
+      },
+      "name": "9",
+      "points": 7
+    }
+  ],
+  "views": 6,
+  "createdAt": {
+    "$date": "2021-12-05T15:39:15.427Z"
+  },
+  "updatedAt": {
+    "$date": "2021-12-05T16:36:54.210Z"
+  },
+  "__v": 5
+},{
+  "_id": {
+    "$oid": "61acdd50fb6bb5370b2f8294"
+  },
+  "like": [
+    "user10@gmail.com"
+  ],
+  "dislike": [],
+  "name": "Favorite Colors",
+  "items": [
+    {
+      "_id": {
+        "$oid": "61acdd50fb6bb5370b2f8295"
+      },
+      "name": "blue",
+      "points": 7
+    },
+    {
+      "_id": {
+        "$oid": "61acdd50fb6bb5370b2f8296"
+      },
+      "name": "orange",
+      "points": 9
+    },
+    {
+      "_id": {
+        "$oid": "61acdd50fb6bb5370b2f8297"
+      },
+      "name": "yellow",
+      "points": 3
+    },
+    {
+      "_id": {
+        "$oid": "61acdd50fb6bb5370b2f8298"
+      },
+      "name": "red",
+      "points": 3
+    },
+    {
+      "_id": {
+        "$oid": "61acdd50fb6bb5370b2f8299"
+      },
+      "name": "green",
+      "points": 1
+    }
+  ],
+  "views": 7,
+  "createdAt": {
+    "$date": "2021-12-05T15:40:00.975Z"
+  },
+  "updatedAt": {
+    "$date": "2021-12-05T16:20:43.990Z"
+  },
+  "__v": 8
+},{
+  "_id": {
+    "$oid": "61ace736fb6bb5370b2f87fe"
+  },
+  "like": [],
+  "dislike": [],
+  "name": "Hated Colors",
+  "items": [
+    {
+      "_id": {
+        "$oid": "61ace736fb6bb5370b2f87ff"
+      },
+      "name": "yellow",
+      "points": 5
+    },
+    {
+      "_id": {
+        "$oid": "61ace736fb6bb5370b2f8800"
+      },
+      "name": "orange",
+      "points": 4
+    },
+    {
+      "_id": {
+        "$oid": "61ace736fb6bb5370b2f8801"
+      },
+      "name": "red",
+      "points": 3
+    },
+    {
+      "_id": {
+        "$oid": "61ace736fb6bb5370b2f8802"
+      },
+      "name": "blue",
+      "points": 2
+    },
+    {
+      "_id": {
+        "$oid": "61ace736fb6bb5370b2f8803"
+      },
+      "name": "white",
+      "points": 1
+    }
+  ],
+  "views": 0,
+  "createdAt": {
+    "$date": "2021-12-05T16:22:14.181Z"
+  },
+  "updatedAt": {
+    "$date": "2021-12-05T16:22:14.181Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "61ace7bdfb6bb5370b2f882e"
+  },
+  "like": [],
+  "dislike": [],
+  "name": "Favorite Food",
+  "items": [
+    {
+      "_id": {
+        "$oid": "61ace7bdfb6bb5370b2f882f"
+      },
+      "name": "rice",
+      "points": 5
+    },
+    {
+      "_id": {
+        "$oid": "61ace7bdfb6bb5370b2f8830"
+      },
+      "name": "chicken",
+      "points": 4
+    },
+    {
+      "_id": {
+        "$oid": "61ace7bdfb6bb5370b2f8831"
+      },
+      "name": "beef",
+      "points": 3
+    },
+    {
+      "_id": {
+        "$oid": "61ace7bdfb6bb5370b2f8832"
+      },
+      "name": "turkey",
+      "points": 2
+    },
+    {
+      "_id": {
+        "$oid": "61ace7bdfb6bb5370b2f8833"
+      },
+      "name": "pork",
+      "points": 1
+    }
+  ],
+  "views": 0,
+  "createdAt": {
+    "$date": "2021-12-05T16:24:29.776Z"
+  },
+  "updatedAt": {
+    "$date": "2021-12-05T16:24:29.776Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "61ace88ffb6bb5370b2f886e"
+  },
+  "like": [],
+  "dislike": [],
+  "name": "Favorite Subject",
+  "items": [
+    {
+      "_id": {
+        "$oid": "61ace88ffb6bb5370b2f886f"
+      },
+      "name": "Math",
+      "points": 5
+    },
+    {
+      "_id": {
+        "$oid": "61ace88ffb6bb5370b2f8870"
+      },
+      "name": "English",
+      "points": 4
+    },
+    {
+      "_id": {
+        "$oid": "61ace88ffb6bb5370b2f8871"
+      },
+      "name": "Science",
+      "points": 3
+    },
+    {
+      "_id": {
+        "$oid": "61ace88ffb6bb5370b2f8872"
+      },
+      "name": "Social Science",
+      "points": 2
+    },
+    {
+      "_id": {
+        "$oid": "61ace88ffb6bb5370b2f8873"
+      },
+      "name": "Physical Education",
+      "points": 1
+    }
+  ],
+  "views": 0,
+  "createdAt": {
+    "$date": "2021-12-05T16:27:59.897Z"
+  },
+  "updatedAt": {
+    "$date": "2021-12-05T16:27:59.897Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "61ace983fb6bb5370b2f88a4"
+  },
+  "like": [],
+  "dislike": [],
+  "name": "Favorite Color",
+  "items": [
+    {
+      "_id": {
+        "$oid": "61ace983fb6bb5370b2f88a5"
+      },
+      "name": "white",
+      "points": 5
+    },
+    {
+      "_id": {
+        "$oid": "61ace983fb6bb5370b2f88a6"
+      },
+      "name": "red",
+      "points": 4
+    },
+    {
+      "_id": {
+        "$oid": "61ace983fb6bb5370b2f88a7"
+      },
+      "name": "blue",
+      "points": 3
+    },
+    {
+      "_id": {
+        "$oid": "61ace983fb6bb5370b2f88a8"
+      },
+      "name": "orange",
+      "points": 2
+    },
+    {
+      "_id": {
+        "$oid": "61ace983fb6bb5370b2f88a9"
+      },
+      "name": "green",
+      "points": 1
+    }
+  ],
+  "views": 0,
+  "createdAt": {
+    "$date": "2021-12-05T16:32:03.984Z"
+  },
+  "updatedAt": {
+    "$date": "2021-12-05T16:32:03.984Z"
+  },
+  "__v": 0
+}]

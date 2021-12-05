@@ -1,0 +1,346 @@
+[{
+  "_id": {
+    "$oid": "61a96dc9f265b66d91e11c8b"
+  },
+  "items": [
+    "",
+    "",
+    "",
+    "",
+    ""
+  ],
+  "like": [],
+  "dislike": [],
+  "name": "Untitled1",
+  "ownerEmail": "user4@gmail.com",
+  "ownerName": "User 4",
+  "views": 0,
+  "published": false,
+  "createdAt": {
+    "$date": "2021-12-03T01:07:21.607Z"
+  },
+  "updatedAt": {
+    "$date": "2021-12-03T01:07:21.607Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "61a96dfbf265b66d91e11c92"
+  },
+  "items": [
+    "",
+    "",
+    "",
+    "",
+    ""
+  ],
+  "like": [],
+  "dislike": [],
+  "name": "Untitled2",
+  "ownerEmail": "user4@gmail.com",
+  "ownerName": "User 4",
+  "views": 0,
+  "published": false,
+  "createdAt": {
+    "$date": "2021-12-03T01:08:11.812Z"
+  },
+  "updatedAt": {
+    "$date": "2021-12-03T01:08:11.812Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "61a96ea9f265b66d91e11c9d"
+  },
+  "items": [
+    "1",
+    "2",
+    "3",
+    "4",
+    "5"
+  ],
+  "like": [],
+  "dislike": [],
+  "name": "Yes",
+  "ownerEmail": "user4@gmail.com",
+  "ownerName": "User 4",
+  "views": 0,
+  "published": false,
+  "createdAt": {
+    "$date": "2021-12-03T01:11:05.666Z"
+  },
+  "updatedAt": {
+    "$date": "2021-12-03T01:19:54.793Z"
+  },
+  "__v": 5
+},{
+  "_id": {
+    "$oid": "61a992b6f95d1d78a4ce92dd"
+  },
+  "items": [
+    "a",
+    "b",
+    "c",
+    "d",
+    "e"
+  ],
+  "like": [
+    "user5@gmail.com",
+    "user5@gmail.com",
+    "user5@gmail.com"
+  ],
+  "dislike": [
+    "user5@gmail.com",
+    "user5@gmail.com",
+    "user5@gmail.com",
+    "user5@gmail.com",
+    "user5@gmail.com",
+    "user5@gmail.com",
+    "user5@gmail.com",
+    "user5@gmail.com",
+    "user3@gmail.com",
+    "user1@gmail.com",
+    "user2@gmail.com"
+  ],
+  "name": "Untitled12",
+  "ownerEmail": "user5@gmail.com",
+  "ownerName": "User 5",
+  "views": 7,
+  "published": true,
+  "createdAt": {
+    "$date": "2021-12-03T03:44:54.584Z"
+  },
+  "updatedAt": {
+    "$date": "2021-12-05T15:53:40.236Z"
+  },
+  "__v": 46
+},{
+  "_id": {
+    "$oid": "61acdd0bfb6bb5370b2f823f"
+  },
+  "items": [
+    "1",
+    "2",
+    "3",
+    "4",
+    "9"
+  ],
+  "like": [
+    "user2@gmail.com"
+  ],
+  "dislike": [],
+  "name": "Favorite Numbers",
+  "ownerEmail": "user2@gmail.com",
+  "ownerName": "User 2",
+  "views": 3,
+  "published": true,
+  "createdAt": {
+    "$date": "2021-12-05T15:38:51.569Z"
+  },
+  "updatedAt": {
+    "$date": "2021-12-05T15:52:12.117Z"
+  },
+  "__v": 13
+},{
+  "_id": {
+    "$oid": "61acdd29fb6bb5370b2f826a"
+  },
+  "items": [
+    "blue",
+    "orange",
+    "yellow",
+    "red",
+    "green"
+  ],
+  "like": [
+    "user2@gmail.com"
+  ],
+  "dislike": [],
+  "name": "Favorite Colors",
+  "ownerEmail": "user2@gmail.com",
+  "ownerName": "User 2",
+  "views": 5,
+  "published": true,
+  "createdAt": {
+    "$date": "2021-12-05T15:39:21.766Z"
+  },
+  "updatedAt": {
+    "$date": "2021-12-05T16:03:12.602Z"
+  },
+  "__v": 22
+},{
+  "_id": {
+    "$oid": "61ace2dcfb6bb5370b2f84cd"
+  },
+  "items": [
+    "orange",
+    "gold",
+    "black",
+    "blue",
+    "red"
+  ],
+  "like": [],
+  "dislike": [],
+  "name": "Favorite Colors",
+  "ownerEmail": "user10@gmail.com",
+  "ownerName": "User 10",
+  "views": 0,
+  "published": true,
+  "createdAt": {
+    "$date": "2021-12-05T16:03:40.678Z"
+  },
+  "updatedAt": {
+    "$date": "2021-12-05T16:04:06.680Z"
+  },
+  "__v": 5
+},{
+  "_id": {
+    "$oid": "61ace33dfb6bb5370b2f8556"
+  },
+  "items": [
+    "9",
+    "4",
+    "3",
+    "2",
+    "1"
+  ],
+  "like": [],
+  "dislike": [],
+  "name": "Favorite Numbers",
+  "ownerEmail": "user10@gmail.com",
+  "ownerName": "User 10",
+  "views": 0,
+  "published": true,
+  "createdAt": {
+    "$date": "2021-12-05T16:05:17.594Z"
+  },
+  "updatedAt": {
+    "$date": "2021-12-05T16:05:33.507Z"
+  },
+  "__v": 5
+},{
+  "_id": {
+    "$oid": "61ace6ebfb6bb5370b2f87cb"
+  },
+  "items": [
+    "yellow",
+    "orange",
+    "red",
+    "blue",
+    "white"
+  ],
+  "like": [],
+  "dislike": [],
+  "name": "Hated Colors",
+  "ownerEmail": "user10@gmail.com",
+  "ownerName": "User 10",
+  "views": 0,
+  "published": true,
+  "createdAt": {
+    "$date": "2021-12-05T16:20:59.453Z"
+  },
+  "updatedAt": {
+    "$date": "2021-12-05T16:22:14.184Z"
+  },
+  "__v": 5
+},{
+  "_id": {
+    "$oid": "61ace737fb6bb5370b2f880b"
+  },
+  "items": [
+    "rice",
+    "chicken",
+    "beef",
+    "turkey",
+    "pork"
+  ],
+  "like": [],
+  "dislike": [],
+  "name": "Favorite Food",
+  "ownerEmail": "user10@gmail.com",
+  "ownerName": "User 10",
+  "views": 0,
+  "published": true,
+  "createdAt": {
+    "$date": "2021-12-05T16:22:15.318Z"
+  },
+  "updatedAt": {
+    "$date": "2021-12-05T16:24:29.780Z"
+  },
+  "__v": 5
+},{
+  "_id": {
+    "$oid": "61ace7c3fb6bb5370b2f883b"
+  },
+  "items": [
+    "Math",
+    "English",
+    "Science",
+    "Social Science",
+    "Physical Education"
+  ],
+  "like": [],
+  "dislike": [],
+  "name": "Favorite Subject",
+  "ownerEmail": "user10@gmail.com",
+  "ownerName": "User 10",
+  "views": 0,
+  "published": true,
+  "createdAt": {
+    "$date": "2021-12-05T16:24:35.647Z"
+  },
+  "updatedAt": {
+    "$date": "2021-12-05T16:27:59.901Z"
+  },
+  "__v": 6
+},{
+  "_id": {
+    "$oid": "61ace8a4fb6bb5370b2f887f"
+  },
+  "items": [
+    "white",
+    "red",
+    "blue",
+    "orange",
+    "green"
+  ],
+  "like": [],
+  "dislike": [],
+  "name": "Favorite Color",
+  "ownerEmail": "user1@gmail.com",
+  "ownerName": "User 1",
+  "views": 0,
+  "published": true,
+  "createdAt": {
+    "$date": "2021-12-05T16:28:20.554Z"
+  },
+  "updatedAt": {
+    "$date": "2021-12-05T16:32:03.987Z"
+  },
+  "__v": 8
+},{
+  "_id": {
+    "$oid": "61acea8afb6bb5370b2f896b"
+  },
+  "items": [
+    "2",
+    "3",
+    "4",
+    "5",
+    "9"
+  ],
+  "like": [],
+  "dislike": [],
+  "name": "Favorite Numbers",
+  "ownerEmail": "user1@gmail.com",
+  "ownerName": "User 1",
+  "views": 0,
+  "published": true,
+  "createdAt": {
+    "$date": "2021-12-05T16:36:26.626Z"
+  },
+  "updatedAt": {
+    "$date": "2021-12-05T16:36:48.085Z"
+  },
+  "__v": 7
+}]

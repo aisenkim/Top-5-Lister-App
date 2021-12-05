@@ -1,0 +1,106 @@
+[{
+  "_id": {
+    "$oid": "619f00095206c553d04c854c"
+  },
+  "firstName": "User",
+  "lastName": "1",
+  "email": "user1@gmail.com",
+  "passwordHash": "$2a$10$TYC/kqPhJ80XQ5K77RKVdul6i34h25v9BZUP4iygKf4MoDol3xb8i",
+  "createdAt": {
+    "$date": "2021-11-25T03:16:25.161Z"
+  },
+  "updatedAt": {
+    "$date": "2021-11-25T03:16:25.161Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "619f01585206c553d04c8565"
+  },
+  "firstName": "User",
+  "lastName": "2",
+  "email": "user2@gmail.com",
+  "passwordHash": "$2a$10$OCaOPFnkG2F5Fl1JbNbvZeroWX2BfPIxsMq2YIhOUO2Z8JAm85YS2",
+  "createdAt": {
+    "$date": "2021-11-25T03:22:00.846Z"
+  },
+  "updatedAt": {
+    "$date": "2021-11-25T03:22:00.846Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "61a9220bca34e55a28e623fb"
+  },
+  "firstName": "User",
+  "lastName": "3",
+  "email": "user3@gmail.com",
+  "passwordHash": "$2a$10$b.Y8Sci8mS3RwBvs5ShIEOGiza1qkMuE27eLS0hdp8/VYoPho9gNy",
+  "createdAt": {
+    "$date": "2021-12-02T19:44:11.868Z"
+  },
+  "updatedAt": {
+    "$date": "2021-12-02T19:44:11.868Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "61a9226871fdd35a40b7779b"
+  },
+  "firstName": "User",
+  "lastName": "4",
+  "email": "user4@gmail.com",
+  "passwordHash": "$2a$10$eKuTKugBH5hgfdXcEvfCEu4cIuTSwEGkDhQDn8FZxyYwtKqrvFFaO",
+  "createdAt": {
+    "$date": "2021-12-02T19:45:44.346Z"
+  },
+  "updatedAt": {
+    "$date": "2021-12-02T19:45:44.346Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "61a99196f95d1d78a4ce928f"
+  },
+  "firstName": "User",
+  "lastName": "5",
+  "email": "user5@gmail.com",
+  "passwordHash": "$2a$10$CgT4tVF8hJIUgVWVbxAYBu.yY6nVBDM71ISCn0rfcRgd/97Twp6Aq",
+  "createdAt": {
+    "$date": "2021-12-03T03:40:06.693Z"
+  },
+  "updatedAt": {
+    "$date": "2021-12-03T03:40:06.693Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "61acdbc5fb6bb5370b2f81fc"
+  },
+  "firstName": "User",
+  "lastName": "10",
+  "email": "user10@gmail.com",
+  "passwordHash": "$2a$10$uthjBspRZu.ZS5ZH80yUvebErWDAVQ0/IACXnkya5VgXF1.U5qmIW",
+  "createdAt": {
+    "$date": "2021-12-05T15:33:25.548Z"
+  },
+  "updatedAt": {
+    "$date": "2021-12-05T15:33:25.548Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "61acdc91fb6bb5370b2f8216"
+  },
+  "firstName": "User",
+  "lastName": "11",
+  "email": "user11@gmail.com",
+  "passwordHash": "$2a$10$dliUvSWKuLWkXjO1TugmOuqBoB4TFHp8M7wmpYBSm6YISid8xhhCK",
+  "createdAt": {
+    "$date": "2021-12-05T15:36:49.451Z"
+  },
+  "updatedAt": {
+    "$date": "2021-12-05T15:36:49.451Z"
+  },
+  "__v": 0
+}]
