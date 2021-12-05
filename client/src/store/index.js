@@ -673,7 +673,7 @@ function GlobalStoreContextProvider(props) {
     store.deleteListComments = async function (listId) {
         const response = await api.deleteTop5ListComments(listId);
         if (response.data.success) {
-            store.loadIdNamePairs(store.toolMenu, "-createAt");
+            store.loadIdNamePairs(store.toolMenu, "-createdAt");
         }
     }
 
@@ -732,7 +732,7 @@ function GlobalStoreContextProvider(props) {
 
             response = await api.updateTop5ListById(top5List._id, top5List);
             if (response.data.success) {
-                await store.loadIdNamePairs(store.toolMenu, "-createAt")
+                await store.loadIdNamePairs(store.toolMenu, "-createdAt")
             }
         }
     }

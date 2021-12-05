@@ -261,13 +261,13 @@ function ListCard(props) {
                     <IconButton onClick={handleLikeButton} aria-label='like'>
                         <ThumbUpIcon style={{fontSize: '24pt', color: isLike ? "blue" : "gray"}}/>
                     </IconButton>
-                    <Typography variant='p' style={{fontSize: '24pt'}}>{idNamePair.like.length}</Typography>
+                    <Typography variant='p' style={{fontSize: '22pt'}}>{idNamePair.like.length}</Typography>
                 </GridItem>
                 <GridItem item xs={1}>
                     <IconButton onClick={handleDislikeButton} aria-label='dislike'>
                         <ThumbDownIcon style={{fontSize: '24pt', color: isDislike ? 'blue' : "gray"}}/>
                     </IconButton>
-                    <Typography variant='p' style={{fontSize: '24pt'}}>{idNamePair.dislike.length}</Typography>
+                    <Typography variant='p' style={{fontSize: '22pt'}}>{idNamePair.dislike.length}</Typography>
                 </GridItem>
                 <GridItem item xs={1}>
                     <IconButton onClick={(event) => {

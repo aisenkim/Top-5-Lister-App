@@ -110,7 +110,7 @@ export default function SplashScreen() {
                         </CardActionArea>
                     </Card>
                 </Grid>
-                <Grid item xs={12}  style={{marginTop: '5%'}}>
+                <Grid item xs={12}  style={{marginTop: '2%'}}>
                     <Typography variant="body2" color="text.secondary" color="black">
                        Developed By: Aisen Kim
                     </Typography>

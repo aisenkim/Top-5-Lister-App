@@ -7,6 +7,8 @@ import {styled} from "@mui/system";
 import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
 import MenuToolbar from "./Toolbar";
+import {useLocation} from "react-router-dom";
+import FakeToolbar from "./FakeToolbar";
 /*
     This React component lets us edit a loaded list, which only
     happens when we are on the proper route.
@@ -80,7 +82,8 @@ function WorkspaceScreen() {
     }
     return (
         <>
-            <MenuToolbar/>
+            {/*<MenuToolbar/>*/}
+            <FakeToolbar/>
             <List
                 sx={{
                     width: "88%",

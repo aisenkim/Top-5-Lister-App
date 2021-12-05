@@ -17,7 +17,7 @@ function Top5Item(props) {
 
     useEffect(() => {
         const hasEmptyString = checkCurrentListHasEmptyString(store.currentList.items)
-        if(hasEmptyString)
+        if (hasEmptyString)
             props.setPublishDisabled(true)
         else
             props.setPublishDisabled(false)
@@ -35,7 +35,7 @@ function Top5Item(props) {
             // store.addUpdateItemTransaction(props.index, text);
             store.updateItem(props.index, text);
             const hasEmptyString = checkCurrentListHasEmptyString(store.currentList.items)
-            if(hasEmptyString)
+            if (hasEmptyString)
                 props.setPublishDisabled(true)
             else
                 props.setPublishDisabled(false)
@@ -53,16 +53,30 @@ function Top5Item(props) {
         return shouldDisable;
     }
 
-    function updateItemDb(event) {
-        store.updateItem(props.index, text);
-        const hasEmptyString = checkCurrentListHasEmptyString(store.currentList.items)
-        if(hasEmptyString)
-            props.setPublishDisabled(true)
-        else
-            props.setPublishDisabled(false)
-        toggleEdit();
+    // PREVENT FROM CASTING MULTIPLE VOTES
+    function listHasSameItem(currentList, currentInput) {
+        let hasSameItem = false;
+        currentList.forEach((item) => {
+            if (item === currentInput) {
+                console.log("Item: ", item)
+                console.log("currentInput: ", text)
+                hasSameItem = true;
+            }
+        })
+        return hasSameItem;
     }
 
+    function updateItemDb(event) {
+        const hasSameItem = listHasSameItem(store.currentList.items, text);
+        store.updateItem(props.index, text);
+        const hasEmptyString = checkCurrentListHasEmptyString(store.currentList.items);
+        if (hasEmptyString || hasSameItem) {
+            props.setPublishDisabled(true)
+        } else {
+            props.setPublishDisabled(false)
+        }
+        toggleEdit();
+    }
 
 
     function handleUpdateText(event) {
