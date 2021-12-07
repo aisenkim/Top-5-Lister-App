@@ -17,7 +17,8 @@ function Top5Item(props) {
 
     useEffect(() => {
         const hasEmptyString = checkCurrentListHasEmptyString(store.currentList.items)
-        if (hasEmptyString)
+        const hasSameItem = listHasSameItemGeneral(store.currentList.items)
+        if (hasEmptyString || hasSameItem)
             props.setPublishDisabled(true)
         else
             props.setPublishDisabled(false)
@@ -58,18 +59,21 @@ function Top5Item(props) {
         let hasSameItem = false;
         currentList.forEach((item) => {
             if (item === currentInput) {
-                console.log("Item: ", item)
-                console.log("currentInput: ", text)
                 hasSameItem = true;
             }
         })
         return hasSameItem;
     }
 
+    function listHasSameItemGeneral(currentList) {
+        return (new Set(currentList)).size !== currentList.length;
+    }
+
     function updateItemDb(event) {
-        const hasSameItem = listHasSameItem(store.currentList.items, text);
+        // const hasSameItem = listHasSameItem(store.currentList.items, text);
         store.updateItem(props.index, text);
         const hasEmptyString = checkCurrentListHasEmptyString(store.currentList.items);
+        const hasSameItem = listHasSameItemGeneral(store.currentList.items)
         if (hasEmptyString || hasSameItem) {
             props.setPublishDisabled(true)
         } else {

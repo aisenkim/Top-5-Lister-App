@@ -204,7 +204,7 @@ function ListCard(props) {
 
     async function handleDislikeButton() {
         // DO NOTHING WHEN LIST NOT PUBLISHED
-        if (!idNamePair.published)
+        if (!idNamePair.published || !auth.user)
             return
         let isLikeCounter = 0
         let isDislikeCounter = 0
